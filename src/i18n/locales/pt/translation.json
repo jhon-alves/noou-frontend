@@ -1,0 +1,605 @@
+{
+  "nav": {
+    "home": "Início",
+    "knowledge": "Conhecimento",
+    "prompts": "Prompts",
+    "agent": "Agentes",
+    "contents": "Conteúdos",
+    "account": "Conta",
+    "logout": "Sair",
+    "privacy": "Política de Privacidade",
+    "admin": "Admin",
+    "business": "Empresas",
+    "free-account": "Conta gratuita"
+  },
+  "login": {
+    "title": "O jeito Noou. de transformar o design em estratégia, eficiência e valor.",
+    "subtitle": "Dê forma às suas ideias. Acelere decisões e potencialize o impacto das suas entregas.",
+    "tags": {
+      "ia": "Inteligência Artificial",
+      "business": "Negócios",
+      "design": "Design",
+      "tecnologia": "Tecnologia"
+    },
+    "signin": "Entrar",
+    "forgot-password": "Esqueceu a senha?",
+    "remember-me": "Lembrar de mim",
+    "dont-have-an-accout": "Não tem uma conta?",
+    "create-account": "Criar conta",
+    "enter": "Entrar",
+    "email-address": "Endereço de email",
+    "by-continuing": "Ao continuar, você concorda com nossos",
+    "and": "e",
+    "terms-of-service": "Termos de Serviço"
+  },
+  "twofactor": {
+    "title": "Autenticação de Dois Fatores",
+    "subtitle": "Digite o código de 6 dígitos enviado para o seu e-mail",
+    "resend": "Reenviar código",
+    "resend-in": "Reenviar código em",
+    "verify": "Verificar",
+    "back": "Voltar ao login",
+    "invalidCode": "Código inválido. Tente novamente.",
+    "codeSent": "Código enviado com sucesso!",
+    "enterCode": "Digite o código de verificação"
+  },
+  "forgot-password": {
+    "title": "Recuperação de senha",
+    "subtitle": "Informe seu e-mail para recuperar sua senha",
+    "reset-password": "Redefinir senha",
+    "info": "Um link para redefinição de senha foi enviado para o seu e-mail.",
+    "go-back-login": "Voltar para login"
+  },
+  "recover-password": {
+    "title": "Recuperação de senha",
+    "back-to-login": "Voltar para o login"
+  },
+  "invited": {
+    "title": "Chegou quem faltava! Vamos começar?",
+    "subtitle": "Só precisamos do seu nome e uma senha para liberar seu novo workspace criativo.",
+    "invitation-error": "Convite não encontrado ou já aceito",
+    "your-name": "Seu nome",
+    "set-password": "Crie uma senha",
+    "cta-btn": "Vamos nessa!",
+    "slogan-title": "Dê um upgrade no seu motor criativo.",
+    "slogan-subtitle": "Agora você pode dar forma às suas ideias mais ousadas. Acelerar cada decisão. Turbinar o impacto de tudo o que você constrói. Este é o workspace onde o design finalmente encontra a estratégia.",
+    "tags": {
+      "strategy-first": "Strategy First",
+      "built-for-team": "Built for Teams",
+      "future-proof": "Future-Proof"
+    }
+  },
+  "dashboard": {
+    "title": "Aqui, suas ideias viram impacto real",
+    "subtitle": "Tome decisões mais rápido, valide caminhos criativos com precisão e entregue resultados que realmente movem o ponteiro.",
+    "bannerTitle": "O que está acontecendo no mundo de Design com IA",
+    "bannerSubtitle": "Newsletter de IA",
+    "bannerDescription": "Converse com nosso agente mais conectado e descubra as novidades da semana no mundo de IA e Design",
+    "tagAi": "Inteligência Artificial",
+    "tagDesign": "Design",
+    "tagTecnologia": "Tecnologia",
+    "bannerBtn": "Acessar",
+    "newsletterTitle": "Newsletter de IA",
+    "newsletterDescription": "Conteúdo semanal com as principais notícias de IA para designers",
+    "newsletterBtn": "Acessar",
+    "coursesTitle": "Conteúdos em destaque",
+    "promptTitle": "Biblioteca de Prompts",
+    "conversationTitle": "Histórico de Conversas",
+    "showMore": "Ver mais",
+    "usePrompt": "Usar prompt",
+    "buildTitle": "Construa com pessoas",
+    "help": "Ajuda",
+    "helpTitle": "Dúvidas sobre a plataforma?",
+    "helpDesc": "Receba ajuda sobre funcionalidades, boas práticas e dicas para aproveitar ao máximo a plataforma",
+    "community": "Comunidade",
+    "communityTitle": "Participe da nossa comunidade beta",
+    "communityDesc": "Participe de eventos exclusivos, compartilhe feedbacks e ajude a construir o futuro"
+  },
+  "agent": {
+    "created-by": "Criado por",
+    "check-content": "Noou. pode gerar respostas incorretas. Então, verifique o conteúdo.",
+    "input-placeholder": "Escreva o que você precisa...",
+    "send-message-error": "Falha ao enviar mensagem",
+    "start-container-error": "Inicie primeiro um contêiner",
+    "select-agent-error": "Selecione primeiro um agente",
+    "create-container-error": "Não foi possível criar um novo contêiner",
+    "abort-message-error": "Conversa cancelada",
+    "drop-files-to-attach": "Solte os arquivos para anexar",
+    "agent-settings": "Configurações do agente",
+    "agent-identifier": "Identificador do agente",
+    "session-id": "Id da sessão",
+    "container-id": "Id do container",
+    "delete-conversation": "Excluir conversa",
+    "delete-conversation-desc": "Esta ação é permanente. O histórico de conversas será removido e não poderá ser recuperado.",
+    "no-sessions": "Sem conversas ainda",
+    "no-summary": "Resumo não gerado para esta conversa",
+    "use-session": "Usar conversa",
+    "total-tokens": "Total de tokens",
+    "output-tokens": "Tokens de saída",
+    "input-tokens": "Tokens de entrada",
+    "choose-an-assistant": "Escolha um assistente para começar",
+    "new-chat": "Novo chat",
+    "start-container": "Iniciar container",
+    "creating-container": "Sincronizando informações...",
+    "creating-container-sub": "Estamos organizando todos os dados para o melhor resultado.",
+    "connecting-ws": "Refinando a estratégia...",
+    "connecting-ws-step-1": "Buscando o especialista perfeito para cuidar deste desafio.",
+    "connecting-ws-step-2": "Mapeando variáveis e identificando os melhores caminhos técnicos.",
+    "connecting-ws-step-3": "Processando insights e estruturando a solução ideal.",
+    "connecting-ws-step-4": "Validando a consistência dos dados para garantir máxima precisão.",
+    "connecting-ws-step-5": "Quase lá! O agente está finalizando os últimos detalhes da resposta.",
+    "container-active": "Tudo certo!",
+    "container-active-sub": "Prontinho. Hora de conferir o que preparamos para você!",
+    "preview-sesssion": "Pré-visualizar",
+    "export-pdf": "Exportar PDF",
+    "title-use-prompt-modal": "Ative o container para usar este prompt",
+    "title-use-session-modal": "Ative o container para usar esta conversa",
+    "description-use-prompt-modal": "Para enviar prompts nesta tela, é necessário que exista um container ativo para processar a execução do agente.",
+    "description-use-session-modal": "Para usar a conversa, é necessário que exista um container ativo para processar a execução do agente."
+  },
+  "settings": {
+    "title": "Conta",
+    "subtitle": "Gerencie suas preferências e configurações de conta",
+    "tabs": {
+      "profile": "Perfil",
+      "security": "Segurança",
+      "preferences": "Preferências",
+      "notifications": "Notificações",
+      "integrations": "Integrações"
+    },
+    "profile": {
+      "title": "Informações Pessoais",
+      "updated-data-success": "Dados atualizados!"
+    },
+    "security": {
+      "password-title-modal": "Alterar senha",
+      "password-title-desc": "Digite sua nova senha para concluir a alteração",
+      "password-title": "Alteração de senha",
+      "password-desc": "Clique no botão abaixo para iniciar o processo. Enviaremos um link de redefinição para o seu e-mail cadastrado.",
+      "password-send-link": "Enviar link de alteração",
+      "new-password": "Nova senha",
+      "enter-new-password": "Digite sua nova senha",
+      "confirm-password": "Confirmar senha",
+      "enter-confirm-password": "Confirme sua nova senha",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "password-success": "Senha alterada!",
+      "password-link-success": "Link para alteração da senha enviado!",
+      "password-different": "A senha informada na confirmação é diferente da nova senha."
+    },
+    "preferences": {
+      "title": "Idioma e Região",
+      "appearance": "Aparência",
+      "language": "Idioma",
+      "timezone": "Fuso Horário",
+      "save": "Salvar Preferências"
+    },
+    "integrations": {
+      "title": "Integrações com Google",
+      "integration-updated-success": "Integração atualizada!",
+      "integration-cancel-success": "Integração cancelada!"
+    },
+    "dangerZone": {
+      "title": "Zona de Perigo",
+      "deleteAccount": "Excluir Conta",
+      "deleteDescription": "Uma vez excluída, sua conta não poderá ser recuperada. Esta ação é irreversível.",
+      "deleteButton": "Excluir Minha Conta"
+    }
+  },
+  "prompts": {
+    "title": "Biblioteca de Prompts",
+    "subtitle": "Templates prontos para otimizar seu trabalho",
+    "prompts-available": "Prompts disponiveis",
+    "total-likes": "Total de curtidas",
+    "categories": "Categorias",
+    "prompt-empty-state": "Não existe prompts nesta categoria",
+    "liked-prompt": "Prompt curtido",
+    "like-removed": "Curtida removida",
+    "copied-prompt": "Prompt copiado para área de transferência",
+    "interact": "Usar",
+    "use-prompt": "Usar prompt",
+    "prompt-input-block": "Agora é sua hora de preencher",
+    "prompt-output-structure": "Formato do entregável",
+    "design-process": "Processo de design",
+    "disciplines": "Disciplinas"
+  },
+  "contents": {
+    "title": "Conteúdos",
+    "subtitle": "Aprimore suas habilidades com cursos especializados.",
+    "content-details": "Detalhes do conteúdo",
+    "continue-learning": "Continuar Aprendendo",
+    "all-contents": "Todos os conteúdos",
+    "start-learning": "Comece a aprender",
+    "remove-content-success": "Conteúdo removido!",
+    "content-empty-state": "Não existe conteúdos nesta categoria"
+  },
+  "knowledge": {
+    "title": "Conhecimento",
+    "subtitle": "Carregue e organize arquivos de conhecimento para seus agentes de IA",
+    "upload-file": "Carregar arquivo",
+    "total-files": "Total de arquivos",
+    "last-updated": "Ultima atualização",
+    "drag-drop": "Arraste e solte os arquivos aqui ou clique para procurar"
+  },
+  "business": {
+    "title": "Painel do Administrador",
+    "subtitle": "Gerencie usuários, conteúdo, agentes, integrações e configurações da plataforma",
+    "input-search": "Pesquise por nome ou e-mail",
+    "new-business": "Nova empresa",
+    "edit-business": "Editar empresa",
+    "create-business-toast": "Empresa criada",
+    "update-business-toast": "Empresa atualizada",
+    "create-user-toast": "Usuário adicionado",
+    "confirm-delete": "Confirmar exclusão",
+    "confirm-delete-description": "Essa ação não pode ser desfeita.",
+    "business": "Empresas",
+    "manage-users": "Gerenciar usuários",
+    "select-business": "Selecione uma empresa",
+    "business-details": "Detalhes da empresa",
+    "enter-user-email": "Informe o e-mail do usuário",
+    "need-select-business": "Você precisa selecionar uma empresa para continuar usando a plataforma",
+    "business-inactivated-success": "Empresa está inativa",
+    "business-changed-success": "Empresa alterada",
+    "user-removed-success": "Usuário foi removido"
+  },
+  "secrets": {
+    "title": "Segredos",
+    "subtitle": "Gerencie os segredos",
+    "new-secret": "Novo segredo",
+    "create-secret-toast": "Segredo criado",
+    "delete-secret-toast": "Segredo removido",
+    "confirm-delete": "Confirmar exclusão",
+    "confirm-delete-description": "Esta ação não pode ser desfeita.",
+    "secret-empty-state": "Você não possui secrets cadastrados",
+    "enter-key": "Selecione uma chave",
+    "enter-value": "Informe o valor",
+    "secret-business-empty-state": "Não encontramos segredos registrados.",
+    "added-on": "Adicionado em"
+  },
+  "admin": {
+    "total-users": "Total de usuários",
+    "active-users": "Usuários ativos",
+    "search-users": "Buscar usuários...",
+    "invite-user": "Convidar usuário",
+    "invite-user-description": "Envie um convite por e-mail para adicionar um novo membro à equipe",
+    "manage-permissions": "Gerenciar permissões",
+    "set-permissions": "Defina as permissões de acesso",
+    "permissions-success": "As permissões foram atualizadas com sucesso",
+    "permissions-error": "Ocorreu um erro ao salvar permissões",
+    "add-email": "Informe o e-mail",
+    "update-user-success": "Dados atualizados",
+    "update-user-error": "Ocorreu um erro ao atualizar os dados",
+    "edit-user": "Editar usuário",
+    "manage-trainings": "Gerenciar treinamentos",
+    "new-content": "Novo conteúdo",
+    "edit-content": "Editar conteúdo",
+    "preview-content": "Detalhes do conteúdo",
+    "short-description": "Descrição curta",
+    "long-description": "Descrição longa",
+    "group-id": "Id do grupo",
+    "lang": "Idioma",
+    "enter-id": "Informe o id do grupo",
+    "enter-lang": "Informe o idioma",
+    "enter-title": "Infome o título",
+    "enter-categories": "Infome as categorias",
+    "enter-url": "Infome o url do vídeo",
+    "enter-order": "Infome a ordem",
+    "enter-author": "Infome o nome do autor",
+    "enter-short-desc": "Infome a descrição curta",
+    "enter-long-desc": "Infome a descrição longa",
+    "content-create-success": "Conteúdo criado!",
+    "content-edit-success": "Conteúdo atualizado!",
+    "prompts": {
+      "new-prompt": "Novo prompt",
+      "edit-prompt": "Editar prompt",
+      "basic-information": "Informações básicas",
+      "basic-information-description": "Dados principais do prompt usados na listagem da biblioteca.",
+      "enter-description": "Digite uma breve descrição do prompt",
+      "prompt-template": "Template do prompt",
+      "enter-prompt-template": "Digite o template base do prompt",
+      "select-categories": "Selecione as categorias do prompt",
+      "tags": "Tags",
+      "select-tags": "Selecione as tags do prompt",
+      "visibility": "Visibilidade",
+      "select-visibility": "Selecione a visibilidade do prompt",
+      "visibility-public": "Público",
+      "visibility-private": "Privado",
+      "visibility-corporation": "Empresa",
+      "agent": "Agente",
+      "select-agent": "Selecione um agente",
+      "language": "Idioma",
+      "select-language": "Selecione o idioma",
+      "language-english": "Inglês",
+      "language-portuguese": "Português",
+      "prompt-details": "Detalhes do prompt",
+      "prompt-details-description": "Contexto, objetivo, saídas esperadas e instruções de execução.",
+      "context": "Contexto",
+      "enter-context": "Descreva o contexto em que este prompt será usado",
+      "objective": "Objetivo",
+      "enter-objective": "Descreva o objetivo principal deste prompt",
+      "expected-outputs": "Saídas esperadas",
+      "enter-expected-output": "Digite uma saída esperada",
+      "instructions": "Instruções",
+      "add-instruction": "Adicionar instrução",
+      "enter-instruction": "Digite uma instrução de execução",
+      "prompt-command": "Comando do prompt",
+      "prompt-command-description": "Comando do prompt, tarefas, campos dinâmicos e estrutura de saída.",
+      "command": "Comando",
+      "enter-command": "Digite as instruções do comando enviadas ao agente",
+      "tasks": "Tarefas",
+      "enter-task": "Digite uma tarefa",
+      "input-block": "Bloco de entrada",
+      "input-field": "Campo",
+      "enter-input-key": "Digite a chave do campo",
+      "enter-input-label": "Digite o rótulo do campo",
+      "enter-input-placeholder": "Digite o placeholder do campo",
+      "select-input-type": "Selecione o tipo do campo",
+      "output-structure": "Estrutura de saída",
+      "output-section": "Seção de saída",
+      "enter-output-section-name": "Digite o nome da seção de saída",
+      "output-items": "Itens de saída",
+      "enter-output-item": "Digite um item de saída"
+    }
+  },
+  "privacy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última atualização: 8 de dezembro de 2025",
+    "copyright": "Todos os direitos reservados.",
+    "content": [
+      {
+        "title": "",
+        "text": "Esta Política de Privacidade descreve como a Noou (a \"Empresa\") coleta e processa os dados pessoais de usuários interessados em acompanhar o desenvolvimento e lançamento da plataforma Noou (dedicada a agentes de design, bibliotecas de prompts e templates) durante sua fase de pré-lançamento."
+      },
+      {
+        "title": "1. Controlador de Dados e Escopo",
+        "sections": [
+          {
+            "subtitle": "1.1. Controlador de Dados",
+            "text": "A Noou é a controladora dos dados pessoais coletados sob esta Política."
+          },
+          {
+            "subtitle": "1.2. Escopo",
+            "text": "Esta Política é estritamente limitada à coleta e processamento de um único dado pessoal: o endereço de e-mail do Usuário. Nenhum outro dado pessoal é coletado nesta fase."
+          }
+        ]
+      },
+      {
+        "title": "2. Base Legal e Finalidade do Processamento",
+        "sections": [
+          {
+            "subtitle": "2.1. Base Legal",
+            "text": "O processamento do e-mail do Usuário é baseado exclusivamente no Consentimento do Usuário, fornecido quando o e-mail é enviado através do formulário de registro, em conformidade com a Lei Geral de Proteção de Dados do Brasil (LGPD) e melhores práticas internacionais."
+          },
+          {
+            "subtitle": "2.2. Finalidade Específica",
+            "text": "O endereço de e-mail coletado será usado para a finalidade exclusiva de comunicação direta sobre a plataforma Noou, incluindo:",
+            "list": [
+              "Atualizações de status, avanços técnicos e cronogramas de desenvolvimento.",
+              "Anúncios oficiais sobre a data de lançamento e disponibilidade da plataforma.",
+              "Newsletters e atualizações estritamente relacionadas aos recursos e funcionalidades da Noou."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "3. Compartilhamento de Dados e Segurança",
+        "sections": [
+          {
+            "subtitle": "3.1. Política de Não Compartilhamento",
+            "text": "O endereço de e-mail coletado não será vendido, alugado, arrendado ou compartilhado com terceiros externos para fins comerciais, de marketing ou publicidade não relacionados às comunicações especificadas na Seção 2.2."
+          },
+          {
+            "subtitle": "3.2. Segurança de Dados",
+            "text": "A Noou implementa salvaguardas administrativas, técnicas e físicas apropriadas para proteger o endereço de e-mail contra acesso não autorizado, destruição, perda, alteração ou qualquer forma de processamento ilícito."
+          }
+        ]
+      },
+      {
+        "title": "4. Direitos do Titular dos Dados",
+        "sections": [
+          {
+            "subtitle": "4.1.",
+            "text": "O Usuário, como titular dos dados, pode exercer os seguintes direitos em relação ao seu endereço de e-mail a qualquer momento:",
+            "list": [
+              "Direito de Retirada de Consentimento (Opt-Out): O Usuário tem o direito de revogar o consentimento e parar de receber comunicações. Isso pode ser executado imediatamente através do link automático de \"cancelar inscrição\" fornecido em cada comunicação por e-mail.",
+              "Direito de Acesso e Confirmação: O direito de obter confirmação sobre se seus dados estão sendo processados e acesso a esses dados.",
+              "Direito de Exclusão: O direito de solicitar a exclusão permanente de seu endereço de e-mail de nosso banco de dados de pré-lançamento.",
+              "Direito de Correção/Retificação: O direito de ter dados incompletos, imprecisos ou desatualizados corrigidos."
+            ]
+          },
+          {
+            "subtitle": "4.2.",
+            "text": "Para exercer os direitos da Seção 4.1 (excluindo o opt-out automático), o Usuário deve entrar em contato com o Controlador de Dados usando as informações de contato fornecidas na Seção 6."
+          }
+        ]
+      },
+      {
+        "title": "5. Prazo e Validade",
+        "sections": [
+          {
+            "subtitle": "5.1.",
+            "text": "Esta Política de Privacidade é específica para a fase de pré-lançamento. Uma Política de Privacidade e Termos de Uso abrangentes e detalhados serão disponibilizados no lançamento oficial e operação da Plataforma Noou."
+          }
+        ]
+      },
+      {
+        "title": "6. Informações de Contato",
+        "sections": [
+          {
+            "subtitle": "6.1.",
+            "text": "Para quaisquer dúvidas, preocupações ou para exercer seus direitos sob esta Política, entre em contato conosco em:",
+            "contact": "privacy@noou.ai"
+          }
+        ]
+      }
+    ]
+  },
+  "faq": {
+    "title": "Ajuda & Suporte",
+    "subtitle": "Encontre respostas e obtenha suporte",
+    "frequently-asked-questions": "Perguntas Frequentes",
+    "categories": {
+      "all": "Todos",
+      "gettingStarted": "Primeiros Passos",
+      "agents": "Agentes",
+      "prompts": "Prompts",
+      "billing": "Pagamentos",
+      "technical": "Técnico"
+    },
+    "questions": [
+      {
+        "question": "Como criar meu primeiro agente de IA?",
+        "answer": "Navegue até a página Agentes, clique em \"Criar Agente\", escolha um template ou comece do zero, personalize as configurações e clique em \"Salvar\".",
+        "category": "gettingStarted"
+      },
+      {
+        "question": "O que são Prompts e como usá-los?",
+        "answer": "Prompts são templates pré-construídos que ajudam você a obter os melhores resultados da IA. Navegue pela Biblioteca de Prompts, selecione um que atenda às suas necessidades e personalize para seu caso específico.",
+        "category": "prompts"
+      },
+      {
+        "question": "Como posso treinar um agente com meus próprios dados?",
+        "answer": "Vá para a página Contexto, faça upload dos seus arquivos (PDFs, docs etc.), organize-os por categoria e atribua-os a agentes específicos nas configurações do agente.",
+        "category": "agents"
+      },
+      {
+        "question": "Quais métodos de pagamento vocês aceitam?",
+        "answer": "Aceitamos todos os principais cartões de crédito (Visa, Mastercard, Amex), PayPal e transferências bancárias para planos enterprise.",
+        "category": "billing"
+      },
+      {
+        "question": "Como faço upgrade do meu plano?",
+        "answer": "Vá em Configurações > Pagamento, escolha o plano desejado e siga o processo de pagamento. O upgrade é imediato.",
+        "category": "billing"
+      },
+      {
+        "question": "Meus dados estão seguros?",
+        "answer": "Sim. Utilizamos criptografia de nível empresarial, armazenamento em nuvem seguro e seguimos rigorosamente as regulamentações de privacidade. Seus dados nunca são compartilhados com terceiros.",
+        "category": "technical"
+      },
+      {
+        "question": "Posso exportar meu histórico de conversas?",
+        "answer": "Sim. Você pode exportar todas as conversas em formato JSON ou CSV nas configurações do chat do agente.",
+        "category": "technical"
+      },
+      {
+        "question": "Quais idiomas os agentes de IA suportam?",
+        "answer": "Nossos agentes de IA suportam mais de 50 idiomas, incluindo inglês, português, espanhol, francês, alemão, chinês, japonês e outros.",
+        "category": "agents"
+      }
+    ]
+  },
+  "global": {
+    "logout-confirm-title": "Deseja sair da conta?",
+    "logout-confirm-desc": "Você será redirecionado para a tela de login",
+    "search": "Pesquise produtos, agentes, prompts...",
+    "unexpected-error": "Ocorreu um erro inesperado",
+    "access-denied-error": "Acesso negado",
+    "resource-not-found-error": "Recurso não encontrado",
+    "an-error-occurred-error": "Ocorreu um erro",
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Próximo",
+      "rows-per-page": "Linhas por página"
+    }
+  },
+  "form": {
+    "enter-name": "Informe o nome",
+    "enter-email": "Informe o e-mail",
+    "enter-your-email": "Informe o seu e-mail",
+    "enter-new-password": "Informe a nova senha",
+    "enter-title": "Informe o título",
+    "enter-description": "Informe a descrição",
+    "enter-url": "Informe a url",
+    "enter-short-description": "Informe a descrição curta",
+    "enter-author": "Informe o autor",
+    "enter-categories": "Informe a categoria"
+  },
+  "common": {
+    "name": "Nome",
+    "phone": "Telefone",
+    "password": "Senha",
+    "edit": "Editar",
+    "save": "Salvar",
+    "send": "Enviar",
+    "actions": "Ações",
+    "delete": "Deletar",
+    "cancel": "Cancelar",
+    "view": "Visualizar",
+    "active": "Ativo",
+    "inactive": "Inativo",
+    "pending": "Pendente",
+    "pendings": "Pendentes",
+    "filters": "Filtros",
+    "by": "Por",
+    "order": "Ordem",
+    "specialties": "Especialidades",
+    "filter": "Filtrar",
+    "title": "Título",
+    "description": "Descrição",
+    "secrets": "Segredos",
+    "key": "Chave",
+    "value": "Valor",
+    "more": "mais",
+    "go-back": "Voltar",
+    "loading": "Carregando...",
+    "permissions": "Permissões",
+    "permission": "Permissão",
+    "role": "Função",
+    "switch-language": "Alterar idioma",
+    "confirm": "Confirmar",
+    "all": "Todos",
+    "author": "Autor",
+    "user": "Usuário",
+    "users": "Usuários",
+    "success": "Sucesso",
+    "error": "Erro",
+    "categories": "Categorias",
+    "language": "Idioma",
+    "portuguese": "Português",
+    "english": "Inglês",
+    "dark-mode": "Modo escuro",
+    "light-mode": "Modo claro",
+    "brand": "Marca",
+    "technology": "Tecnologia",
+    "design": "Design",
+    "content": "Conteúdo",
+    "research": "Pesquisa",
+    "address": "Endereço",
+    "invitation": "Convite",
+    "accepted": "Aceito",
+    "invitation-sent": "Convite enviado",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "history": "Histórico",
+    "preview": "Pré-visualização",
+    "created-at": "Criado em",
+    "updated-at": "Atualizado em",
+    "summary": "Resumo",
+    "details": "Detalhes",
+    "metrics": "Métricas",
+    "duration": "Duração",
+    "assistant": "Assistente",
+    "select": "Selecione",
+    "selected": "Selecionados",
+    "search": "Buscar",
+    "topics": "Tópicos",
+    "short-description": "Descrição curta",
+    "long-description": "Descrição longa",
+    "soon": "Em breve",
+    "soon-message": "Em breve você poderá organizar, conectar e gerenciar o conhecimento dos seus agentes de forma ainda mais inteligente.",
+    "no-results": "Nenhum resultado encontrado para",
+    "result": "Resultado",
+    "other": "Outro",
+    "context": "Contexto",
+    "objective": "Objetivo",
+    "instructions": "Instruções",
+    "deliverables": "Entregáveis",
+    "add": "Adicionar"
+  },
+  "notfound": {
+    "title": "Eita! Algo deu errado por aqui.",
+    "description": "Não encontramos esta página, mas vamos investigar o que rolou.",
+    "btn-cta": "Voltar à home"
+  }
+}

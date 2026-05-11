@@ -1,0 +1,17 @@
+# Pastas de build e dependências
+node_modules/
+dist/
+build/
+.next/
+
+# Pasta de componentes UI (como shadcn)
+src/components/ui/
+
+# Arquivos de configuração que você não quer que mudem de estilo
+package.json
+package-lock.json
+tsconfig.json
+pnpm-lock.yaml
+
+# Se quiser ignorar extensões específicas em uma pasta
+src/assets/**/*.svg

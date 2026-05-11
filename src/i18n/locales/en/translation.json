@@ -1,0 +1,605 @@
+{
+  "nav": {
+    "home": "Home",
+    "knowledge": "Knowledge",
+    "prompts": "Prompts",
+    "agent": "Agents",
+    "contents": "Contents",
+    "account": "Account",
+    "logout": "Logout",
+    "privacy": "Privacy Policy",
+    "admin": "Admin",
+    "business": "Business",
+    "free-account": "Free account"
+  },
+  "login": {
+    "title": "The Noou way of transforming Design into strategy, efficiency and value.",
+    "subtitle": "Shape your ideas. Accelerate decisions and boost the impact of your deliverables.",
+    "tags": {
+      "ia": "Artificial Intelligence",
+      "business": "Business",
+      "design": "Design",
+      "tecnologia": "Technology"
+    },
+    "signin": "Sign In",
+    "forgot-password": "Forgot your password?",
+    "remember-me": "Remember me",
+    "dont-have-an-accout": "Don’t have an account?",
+    "create-account": "Create account",
+    "enter": "Log in",
+    "email-address": "Email address",
+    "by-continuing": "By continuing, you agree to our",
+    "and": "and",
+    "terms-of-service": "Terms of service"
+  },
+  "twofactor": {
+    "title": "Two-Factor Authentication",
+    "subtitle": "Enter the 6-digit code sent to your email",
+    "resend": "Resend code",
+    "resend-in": "Resend code in",
+    "verify": "Verify",
+    "back": "Back to login",
+    "invalidCode": "Invalid code. Please try again.",
+    "codeSent": "Code sent successfully!",
+    "enterCode": "Enter verification code"
+  },
+  "forgot-password": {
+    "title": "Password Recovery",
+    "subtitle": "Enter your email to recover your password",
+    "reset-password": "Reset Password",
+    "info": "A password reset link has been sent to your email.",
+    "go-back-login": "Back to login"
+  },
+  "recover-password": {
+    "title": "Recover password",
+    "back-to-login": "Back to login"
+  },
+  "invited": {
+    "title": "You’re in! Let’s get you started!",
+    "subtitle": "Just a name and a password to unlock your new creative workspace.",
+    "invitation-error": "Invitation not found or already accepted",
+    "your-name": "Your Name",
+    "set-password": "Set a Password",
+    "cta-btn": "Let’s do this!",
+    "slogan-title": "Upgrade your creative engine.",
+    "slogan-subtitle": "Shape your boldest ideas. Accelerate every decision. Boost the impact of everything you build. This is the workspace where design finally meets strategy.",
+    "tags": {
+      "strategy-first": "Strategy First",
+      "built-for-team": "Built for Team",
+      "future-proof": "Future-Proof"
+    }
+  },
+  "dashboard": {
+    "title": "Here, your intent becomes impact",
+    "subtitle": "Accelerate your decisions, validate your creative paths with precision, and deliver results that drive real business value.",
+    "bannerTitle": "What's happening in the AI Design world",
+    "bannerSubtitle": "AI Newsletter",
+    "bannerDescription": "Chat with our most connected agent and discover this week's news in the AI and Design world",
+    "tagAi": "Artificial Intelligence",
+    "tagDesign": "Design",
+    "tagTecnologia": "Technology",
+    "bannerBtn": "Access",
+    "newsletterTitle": "AI Newsletter",
+    "newsletterDescription": "Weekly content with the best AI news for designers",
+    "newsletterBtn": "Access",
+    "coursesTitle": "Featured content",
+    "promptTitle": "Prompt Library",
+    "conversationTitle": "Conversation History",
+    "showMore": "Show more",
+    "usePrompt": "Use prompt",
+    "buildTitle": "Build with people",
+    "help": "Help",
+    "helpTitle": "We learn with you",
+    "helpDesc": "Access organized documentation and find what you need quickly",
+    "community": "Community",
+    "communityTitle": "Join our beta community",
+    "communityDesc": "Participate in exclusive events, share feedback and help build the future"
+  },
+  "agent": {
+    "created-by": "Created by",
+    "check-content": "Noou. can generate incorrect responses. So, check the content.",
+    "input-placeholder": "Write what you need...",
+    "send-message-error": "Failed to send message",
+    "start-container-error": "Please start a container first",
+    "select-agent-error": "Please select an agent first",
+    "create-container-error": "Could not create a new container",
+    "abort-message-error": "Request cancelled",
+    "drop-files-to-attach": "Drop files to attach",
+    "agent-settings": "Agent Settings",
+    "agent-identifier": "Agent identifier",
+    "session-id": "Session ID",
+    "container-id": "Container ID",
+    "delete-conversation": "Delete conversation",
+    "delete-conversation-desc": "This action is permanent. Your conversation history will be removed and cannot be recovered.",
+    "no-sessions": "No conversations yet",
+    "no-summary": "Summary not generated for this conversation",
+    "use-session": "Use session",
+    "total-tokens": "Total Tokens",
+    "output-tokens": "Output Tokens",
+    "input-tokens": "Input Tokens",
+    "choose-an-assistant": "Choose an assistant to start",
+    "new-chat": "New chat",
+    "start-container": "Start container",
+    "creating-container": "Synchronizing information...",
+    "creating-container-sub": "We're organizing all the data to deliver the best result.",
+    "connecting-ws": "Refining the strategy...",
+    "connecting-ws-step-1": "Finding the right specialist to handle this challenge.",
+    "connecting-ws-step-2": "Mapping variables and identifying the best technical paths.",
+    "connecting-ws-step-3": "Processing insights and structuring the ideal solution.",
+    "connecting-ws-step-4": "Validating data consistency to ensure maximum accuracy.",
+    "connecting-ws-step-5": "Almost there! The agent is finalizing the last details of the response.",
+    "container-active": "All set!",
+    "container-active-sub": "Done. Time to check what we've prepared for you!",
+    "preview-sesssion": "Preview",
+    "export-pdf": "Export PDF",
+    "title-use-prompt-modal": "Activate the container to use this prompt.",
+    "title-use-session-modal": "Activate the container to use this conversation.",
+    "description-use-prompt-modal": "To send prompts on this screen, an active container is required to process the agent's execution.",
+    "description-use-session-modal": "To use the conversation, an active container is required to process the agent's execution."
+  },
+  "settings": {
+    "title": "Account",
+    "subtitle": "Manage your account preferences and settings",
+    "tabs": {
+      "profile": "Profile",
+      "security": "Security",
+      "preferences": "Preferences",
+      "notifications": "Notifications",
+      "integrations": "Integrations"
+    },
+    "profile": {
+      "title": "Personal Information",
+      "updated-data-success": "Updated data!"
+    },
+    "security": {
+      "password-title-modal": "Change password",
+      "password-title-desc": "Enter your new password to complete the change",
+      "password-title": "Change Password",
+      "password-desc": "Click the button below to begin the process. We will send a password reset link to the email address you provided.",
+      "password-send-link": "Send edit link",
+      "new-password": "New password",
+      "enter-new-password": "Enter your new password",
+      "confirm-password": "Confirm password",
+      "enter-confirm-password": "Confirm your new password",
+      "active": "Active",
+      "inactive": "Inactive",
+      "password-success": "Password changed!",
+      "password-link-success": "A link to change your password has been sent!",
+      "password-different": "The password entered in the confirmation is different from the new password."
+    },
+    "preferences": {
+      "title": "Language and Region",
+      "appearance": "Appearance",
+      "language": "Language",
+      "timezone": "Timezone",
+      "save": "Save preferences"
+    },
+    "integrations": {
+      "title": "Google Integrations",
+      "integration-updated-success": "Integration updated!",
+      "integration-cancel-success": "Integration canceled!"
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "deleteAccount": "Delete Account",
+      "deleteDescription": "Once deleted, your account cannot be recovered. This action is irreversible.",
+      "deleteButton": "Delete My Account"
+    }
+  },
+  "prompts": {
+    "title": "Prompt Library",
+    "subtitle": "Ready-to-use templates to optimize your work",
+    "prompts-available": "Prompts available",
+    "total-likes": "Total likes",
+    "categories": "Categories",
+    "prompt-empty-state": "There are no prompts in this category",
+    "liked-prompt": "Liked prompt",
+    "like-removed": "Like removed",
+    "copied-prompt": "Prompt copied to clipboard",
+    "interact": "Use",
+    "use-prompt": "Use prompt",
+    "prompt-input-block": "Now it’s your turn to fill it in",
+    "prompt-output-structure": "Deliverable format",
+    "design-process": "Design Process",
+    "disciplines": "Disciplines"
+  },
+  "contents": {
+    "title": "Contents",
+    "subtitle": "Develop your skills with specialized courses",
+    "content-details": "Content Details",
+    "continue-learning": "Continue Learning",
+    "all-contents": "All contents",
+    "start-learning": "Start learning",
+    "remove-content-success": "Content deleted!",
+    "content-empty-state": "There are no contents in this category"
+  },
+  "knowledge": {
+    "title": "Knowledge",
+    "subtitle": "Upload and organize knowledge files for your AI agents",
+    "upload-file": "Upload file",
+    "total-files": "Total files",
+    "last-updated": "Last updated",
+    "drag-drop": "Drag and drop files here or click to browse"
+  },
+  "business": {
+    "title": "Administrator Panel",
+    "subtitle": "Manage business, secrets and users",
+    "input-search": "Search by name or e-mail",
+    "new-business": "New business",
+    "edit-business": "Edit business",
+    "create-business-toast": "Business created",
+    "update-business-toast": "Business updated",
+    "create-user-toast": "Added user",
+    "confirm-delete": "Confirm deletion",
+    "confirm-delete-description": "This action cannot be undone.",
+    "business": "Business",
+    "manage-users": "Manage users",
+    "select-business": "Select a business",
+    "business-details": "Business details",
+    "enter-user-email": "Enter the user's email address",
+    "need-select-business": "You need to select a business to continue using the platform",
+    "business-inactivated-success": "Business is inactivated",
+    "business-changed-success": "Business changed",
+    "user-removed-success": "User is removed"
+  },
+  "secrets": {
+    "title": "Secrets",
+    "subtitle": "Manage your secrets",
+    "new-secret": "New secret",
+    "create-secret-toast": "Secret created",
+    "delete-secret-toast": "Deleted secret",
+    "confirm-delete": "Confirm deletion",
+    "confirm-delete-description": "This action cannot be undone.",
+    "secret-empty-state": "You have no secrets registered.",
+    "enter-key": "Select a key",
+    "enter-value": "Enter the value",
+    "secret-business-empty-state": "We found no registered secrets",
+    "added-on": "Added on"
+  },
+  "admin": {
+    "total-users": "Total users",
+    "active-users": "Active users",
+    "search-users": "Search users...",
+    "invite-user": "Invite user",
+    "invite-user-description": "Send an email invitation to add a new member to the team",
+    "manage-permissions": "Manage permissions",
+    "set-permissions": "Set access permissions",
+    "permissions-success": "Permissions have been successfully updated",
+    "permissions-error": "An error occurred while saving permissions",
+    "add-email": "Enter email address",
+    "update-user-success": "Updated data",
+    "update-user-error": "An error occurred while updating the data.",
+    "edit-user": "Edit user",
+    "manage-trainings": "Manage trainings",
+    "new-content": "New content",
+    "edit-content": "Edit content",
+    "preview-content": "Content details",
+    "short-description": "Short description",
+    "long-description": "Long description",
+    "group-id": "Group ID",
+    "lang": "Language",
+    "enter-id": "Enter the group id",
+    "enter-lang": "Enter the language",
+    "enter-title": "Enter the title",
+    "enter-categories": "Enter the categories",
+    "enter-url": "Enter the video url",
+    "enter-order": "Enter the sort order",
+    "enter-author": "Enter the author",
+    "enter-short-desc": "Enter the short description",
+    "enter-long-desc": "Enter the long description",
+    "content-create-success": "Content created!",
+    "content-edit-success": "Content edited!",
+    "prompts": {
+      "new-prompt": "New Prompt",
+      "edit-prompt": "Edit Prompt",
+      "basic-information": "Basic information",
+      "basic-information-description": "Main prompt data used in the library listing.",
+      "enter-description": "Enter a short prompt description",
+      "prompt-template": "Prompt template",
+      "enter-prompt-template": "Enter the base prompt template",
+      "select-categories": "Select prompt categories",
+      "tags": "Tags",
+      "select-tags": "Select prompt tags",
+      "visibility": "Visibility",
+      "select-visibility": "Select prompt visibility",
+      "visibility-public": "Public",
+      "visibility-private": "Private",
+      "visibility-corporation": "Company",
+      "agent": "Agent",
+      "select-agent": "Select agent",
+      "language": "Language",
+      "select-language": "Select language",
+      "language-english": "English",
+      "language-portuguese": "Portuguese",
+      "prompt-details": "Prompt details",
+      "prompt-details-description": "Context, objective, expected outputs and execution instructions.",
+      "context": "Context",
+      "enter-context": "Describe the context where this prompt will be used",
+      "objective": "Objective",
+      "enter-objective": "Describe the main objective of this prompt",
+      "expected-outputs": "Expected outputs",
+      "enter-expected-output": "Enter an expected output",
+      "instructions": "Instructions",
+      "add-instruction": "Add instruction",
+      "enter-instruction": "Enter an execution instruction",
+      "prompt-command": "Prompt command",
+      "prompt-command-description": "Command prompt, tasks, dynamic inputs and output structure.",
+      "command": "Command",
+      "enter-command": "Enter the command instructions sent to the agent",
+      "tasks": "Tasks",
+      "enter-task": "Enter a task",
+      "input-block": "Input block",
+      "input-field": "Field",
+      "enter-input-key": "Enter the input key",
+      "enter-input-label": "Enter the input label",
+      "enter-input-placeholder": "Enter the input placeholder",
+      "select-input-type": "Select input type",
+      "output-structure": "Output structure",
+      "output-section": "Output section",
+      "enter-output-section-name": "Enter the output section name",
+      "output-items": "Output items",
+      "enter-output-item": "Enter an output item"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: December 8, 2025",
+    "copyright": "All rights reserved.",
+    "content": [
+      {
+        "title": "",
+        "text": "This Privacy Policy describes how Noou (the \"Company\") collects and processes the personal data of users interested in monitoring the development and launch of the Noou platform (dedicated to design agents, prompt libraries, and templates) during its pre-launch phase."
+      },
+      {
+        "title": "1. Data Controller and Scope",
+        "sections": [
+          {
+            "subtitle": "1.1. Data Controller",
+            "text": "Noou is the controller of the personal data collected under this Policy."
+          },
+          {
+            "subtitle": "1.2. Scope",
+            "text": "This Policy is strictly limited to the collection and processing of a single piece of personal data: the User's electronic mail address (e-mail). No other personal data is collected in this phase."
+          }
+        ]
+      },
+      {
+        "title": "2. Legal Basis and Purpose of Processing",
+        "sections": [
+          {
+            "subtitle": "2.1. Legal Basis",
+            "text": "The processing of the User's e-mail is based solely on the User's Consent, provided when the e-mail is submitted through the registration form, in compliance with the Brazilian General Data Protection Law (LGPD) and international best practices."
+          },
+          {
+            "subtitle": "2.2. Specific Purpose",
+            "text": "The collected e-mail address will be used for the exclusive purpose of direct communication regarding the Noou platform, including:",
+            "list": [
+              "Status updates, technical advancements, and development timelines.",
+              "Official announcements concerning the launch date and platform availability.",
+              "Newsletters and updates strictly related to Noou's features and resources."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "3. Data Sharing and Security",
+        "sections": [
+          {
+            "subtitle": "3.1. Non-Sharing Policy",
+            "text": "The collected e-mail address will not be sold, rented, leased, or shared with external third parties for commercial, marketing, or advertising purposes unrelated to the communications specified in Section 2.2."
+          },
+          {
+            "subtitle": "3.2. Data Security",
+            "text": "Noou implements appropriate administrative, technical, and physical safeguards to protect the e-mail address against unauthorized access, destruction, loss, alteration, or any form of unlawful processing."
+          }
+        ]
+      },
+      {
+        "title": "4. Data Subject Rights",
+        "sections": [
+          {
+            "subtitle": "4.1.",
+            "text": "The User, as the data subject, may exercise the following rights concerning their e-mail address at any time:",
+            "list": [
+              "Right to Withdrawal of Consent (Opt-Out): The User has the right to revoke consent and stop receiving communications. This can be executed immediately via the automatic \"unsubscribe\" link provided in every e-mail communication.",
+              "Right of Access and Confirmation: The right to obtain confirmation as to whether their data is being processed, and access to that data.",
+              "Right to Erasure (Exclusion): The right to request the permanent erasure of their e-mail address from our pre-launch database.",
+              "Right to Correction/Rectification: The right to have incomplete, inaccurate, or outdated data corrected."
+            ]
+          },
+          {
+            "subtitle": "4.2.",
+            "text": "To exercise rights under Section 4.1 (excluding the automatic opt-out), the User must contact the Data Controller using the contact information provided in Section 6."
+          }
+        ]
+      },
+      {
+        "title": "5. Term and Validity",
+        "sections": [
+          {
+            "subtitle": "5.1.",
+            "text": "This Privacy Policy is specific to the pre-launch phase. A comprehensive, detailed Privacy Policy and Terms of Use will be made available upon the official launch and operation of the Noou Platform."
+          }
+        ]
+      },
+      {
+        "title": "6. Contact Information",
+        "sections": [
+          {
+            "subtitle": "6.1.",
+            "text": "For any questions, concerns, or to exercise your rights under this Policy, please contact us at:",
+            "contact": "privacy@noou.ai"
+          }
+        ]
+      }
+    ]
+  },
+  "faq": {
+    "title": "Help & Support",
+    "subtitle": "Find answers and get support",
+    "frequently-asked-questions": "Frequently Asked Questions",
+    "categories": {
+      "all": "All",
+      "gettingStarted": "Getting Started",
+      "agents": "Agents",
+      "prompts": "Prompts",
+      "billing": "Billing",
+      "technical": "Technical"
+    },
+    "questions": [
+      {
+        "question": "How do I create my first AI agent?",
+        "answer": "Navigate to the Agents page, click \"Create Agent\", choose a template or start from scratch, customize the settings, and click \"Save\".",
+        "category": "gettingStarted"
+      },
+      {
+        "question": "What are Prompts and how do I use them?",
+        "answer": "Prompts are pre-built templates that help you get the best results from AI. Browse the Prompt Library, select one that fits your needs, and customize it for your specific use case.",
+        "category": "prompts"
+      },
+      {
+        "question": "How can I train an agent with my own data?",
+        "answer": "Go to the Context page, upload your files (PDFs, docs, etc.), organize them by category, and assign them to specific agents in the agent settings.",
+        "category": "agents"
+      },
+      {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept all major credit cards (Visa, Mastercard, Amex), PayPal, and bank transfers for enterprise plans.",
+        "category": "billing"
+      },
+      {
+        "question": "How do I upgrade my plan?",
+        "answer": "Go to Settings > Billing, choose your desired plan, and follow the payment process. Your upgrade will be immediate.",
+        "category": "billing"
+      },
+      {
+        "question": "Is my data secure?",
+        "answer": "Yes! We use enterprise-grade encryption, secure cloud storage, and follow strict data privacy regulations. Your data is never shared with third parties.",
+        "category": "technical"
+      },
+      {
+        "question": "Can I export my conversation history?",
+        "answer": "Yes, you can export all conversations in JSON or CSV format from the agent chat settings.",
+        "category": "technical"
+      },
+      {
+        "question": "What languages do the AI agents support?",
+        "answer": "Our AI agents support over 50 languages including English, Portuguese, Spanish, French, German, Chinese, Japanese, and more.",
+        "category": "agents"
+      }
+    ]
+  },
+  "global": {
+    "logout-confirm-title": "Would you like to log out of your account?",
+    "logout-confirm-desc": "You will be redirected to the login screen.",
+    "search": "Search products, agents, prompts...",
+    "unexpected-error": "An unexpected error has occurred",
+    "access-denied-error": "Access denied",
+    "resource-not-found-error": "Resource not found",
+    "an-error-occurred-error": "An error occurred",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "rows-per-page": "Rows per page"
+    }
+  },
+  "form": {
+    "enter-name": "Enter the name",
+    "enter-email": "Enter the e-mail",
+    "enter-your-email": "Enter your email address",
+    "enter-new-password": "Recover new password",
+    "enter-title": "Enter the title",
+    "enter-description": "Enter the description",
+    "enter-url": "Enter the url",
+    "enter-short-description": "Enter the short description",
+    "enter-author": "Enter the author",
+    "enter-categories": "Enter the categories"
+  },
+  "common": {
+    "name": "Name",
+    "phone": "Phone",
+    "password": "Password",
+    "edit": "Edit",
+    "save": "Save",
+    "send": "Send",
+    "actions": "Actions",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "view": "View",
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "pendings": "Pendings",
+    "filters": "Filters",
+    "by": "By",
+    "order": "Order",
+    "specialties": "Specialties",
+    "filter": "Filter",
+    "title": "Title",
+    "description": "Description",
+    "secrets": "Secrets",
+    "key": "Key",
+    "value": "Value",
+    "more": "More",
+    "go-back": "Go back",
+    "loading": "Loading...",
+    "permissions": "Permissions",
+    "permission": "Permission",
+    "role": "Role",
+    "switch-language": "Switch Language",
+    "confirm": "Confirm",
+    "all": "All",
+    "author": "Author",
+    "user": "User",
+    "users": "Users",
+    "success": "Success",
+    "error": "Error",
+    "categories": "Categories",
+    "language": "Language",
+    "portuguese": "Portuguese",
+    "english": "English",
+    "dark-mode": "Dark Mode",
+    "light-mode": "Light Mode",
+    "brand": "Brand",
+    "technology": "Technology",
+    "design": "Design",
+    "content": "Content",
+    "research": "Research",
+    "address": "Address",
+    "invitation": "Invitation",
+    "accepted": "Accepted",
+    "invitation-sent": "Invitation sent",
+    "copy": "Copy",
+    "copied": "Copied",
+    "history": "History",
+    "preview": "Preview",
+    "created-at": "Created at",
+    "updated-at": "Updated at",
+    "summary": "Summary",
+    "details": "Details",
+    "metrics": "Metrics",
+    "duration": "Duration",
+    "assistant": "Assistant",
+    "select": "Select",
+    "selected": "Selected",
+    "search": "Search",
+    "topics": "Topics",
+    "short-description": "Short description",
+    "long-description": "Long description",
+    "soon": "Soon",
+    "soon-message": "Soon, you will be able to organize, connect, and manage your agents' knowledge in an even smarter way.",
+    "no-results": "No results found for",
+    "result": "Result",
+    "other": "Other",
+    "context": "Context",
+    "objective": "Objective",
+    "instructions": "Instructions",
+    "deliverables": "Deliverables",
+    "add": "Add"
+  },
+  "notfound": {
+    "title": "Whoops! Something went wrong here.",
+    "description": "We can’t find this page, but we’re looking into what happened.",
+    "btn-cta": "Back to home"
+  }
+}
