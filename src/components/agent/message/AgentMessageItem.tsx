@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { AgentAssistantMessage } from "./AgentAssistantMessage"
 import { AgentMessageAvatar } from "./AgentMessageAvatar"
 import { AgentMessageFiles } from "./AgentMessageFiles"
@@ -10,7 +11,7 @@ interface AgentMessageItemProps {
   isStreaming: boolean
 }
 
-export function AgentMessageItem({ message, isStreaming }: AgentMessageItemProps) {
+export function AgentMessageItemComponent({ message, isStreaming }: AgentMessageItemProps) {
   const isUser = message.role === "user"
   const isAssistant = message.role === "assistant"
 
@@ -56,3 +57,7 @@ function AgentStreamingIndicator() {
     </div>
   )
 }
+
+export const AgentMessageItem = memo(AgentMessageItemComponent, (prev, next) => {
+  return prev.message.content === next.message.content && prev.isStreaming === next.isStreaming
+})

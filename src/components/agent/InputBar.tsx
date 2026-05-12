@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { KeyboardEvent, useRef, useState, useLayoutEffect } from "react"
-import { FileText, Paperclip, Send, Square, X } from "lucide-react"
+import { ArrowUp, FileText, Paperclip, Square, X } from "lucide-react"
 import { getFileTypeLabel } from "@/utils/getFileTypeLabel"
 import { useAgentStore } from "@/stores/useAgentStore"
 import { ChatFileDropzone } from "./ChatFileDropzone"
@@ -163,17 +163,23 @@ export function InputBar({ disabled, isStreaming, onSend, onStop }: InputBarProp
             </div>
 
             {isStreaming ? (
-              <Button className="p-2! size-10" aria-label="Stop generation" onClick={onStop}>
+              <Button
+                variant="primary"
+                className="p-2! size-10"
+                aria-label="Stop generation"
+                onClick={onStop}
+              >
                 <Square className="w-4 h-4" />
               </Button>
             ) : (
               <Button
+                variant="primary"
                 disabled={disabled || !message.trim()}
                 className="p-2! size-10"
                 aria-label="Send message"
                 onClick={handleSend}
               >
-                <Send className="w-4 h-4" />
+                <ArrowUp className="size-5 shrink-0" />
               </Button>
             )}
           </div>

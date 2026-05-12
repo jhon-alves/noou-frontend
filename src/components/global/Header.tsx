@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, Menu } from "lucide-react"
 import { LanguageToggle } from "../shared/LanguageToggle"
 import { BusinessMenu } from "../business/BusinessMenu"
 import { useSidebar } from "@/hooks/useSidebar"
@@ -19,7 +19,7 @@ export function Header() {
             onClick={toggleSidebar}
             className="p-2 mr-2 rounded-xl bg-accent/50 text-[#666f8d] md:hidden"
           >
-            {isCollapsed ? <Menu size={20} /> : <X size={20} />}
+            <Menu size={20} />
           </button>
 
           {/* Logo */}
@@ -34,6 +34,9 @@ export function Header() {
                 <img
                   src={isCollapsed ? "/noou-mini.png" : "/logo.webp"}
                   alt="Noou"
+                  fetchPriority="high"
+                  loading="eager"
+                  decoding="async"
                   className="h-6 w-auto object-contain transition-all duration-300"
                 />
               </div>

@@ -133,7 +133,7 @@
 }
 
 :root {
-  --background: #f9fafb;
+  --background: var(--neutral-100);
   --foreground: #ffffff;
 
   /* Colors */
@@ -230,8 +230,8 @@
 }
 
 .dark {
-  --background: #11141a;
-  --foreground: #181f2f;
+  --background: var(--neutral-800);
+  --foreground: var(--neutral-600);
 
   --card: #262f45;
   --input: #11141a;

@@ -21,12 +21,8 @@ export function ConfigModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="p-3 bg-[#f5f5f5] dark:bg-[#262f45] hover:bg-[#ebebed] dark:hover:bg-[#3d3d48]"
-        >
-          <Settings className="w-5 h-5" />
+        <Button size="xs">
+          <Settings />
         </Button>
       </DialogTrigger>
 

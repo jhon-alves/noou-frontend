@@ -22,9 +22,7 @@ import { HistoryList } from "./HistoryList"
 import { cn } from "@/lib/utils"
 
 interface HistoryDrawerProps {
-  open: boolean
   prompt?: string
-  onOpenChange: (drawer: boolean) => void
   sessions: SessionsResponse
   loadingSessions: boolean
 }
@@ -34,16 +32,18 @@ export interface PreviewStateProps {
   sessionId: string
 }
 
-export function HistoryDrawer({
-  open,
-  onOpenChange,
-  sessions,
-  loadingSessions,
-}: HistoryDrawerProps) {
+export function HistoryDrawer({ sessions, loadingSessions }: HistoryDrawerProps) {
   const qc = useQueryClient()
   const { t } = useTranslation()
-  const { selectedAgent, noouAgents, containerStatus, setSelectedAgent, setSessionId } =
-    useAgentStore()
+  const {
+    selectedAgent,
+    noouAgents,
+    containerStatus,
+    historyOpen,
+    setSelectedAgent,
+    setSessionId,
+    setHistoryOpen,
+  } = useAgentStore()
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [sessionToDelete, setSessionToDelete] = useState<string | null>(null)
   const [isPreview, setIsPreview] = useState<PreviewStateProps>({ open: false, sessionId: null })
@@ -62,7 +62,7 @@ export function HistoryDrawer({
   function handleCloseHistory(e: React.MouseEvent) {
     e.stopPropagation()
     setIsPreview({ open: false, sessionId: null })
-    onOpenChange(false)
+    setHistoryOpen(false)
   }
 
   function handlePreview(e: React.MouseEvent, sessionId: string) {
@@ -85,7 +85,7 @@ export function HistoryDrawer({
     if (containerStatus !== "active") return
 
     setSessionId(sessionId)
-    onOpenChange(false)
+    setHistoryOpen(false)
 
     const filteredAgent = noouAgents.filter((item) => item.identifier === agentIdentifier)[0]
 
@@ -103,9 +103,9 @@ export function HistoryDrawer({
   return (
     <>
       <DrawerLayout
-        open={open}
+        open={historyOpen}
         onOpenChange={(drawer) => {
-          onOpenChange(drawer)
+          setHistoryOpen(drawer)
           setIsPreview({ open: false, sessionId: null })
         }}
         contentClassName={cn(isPreview.open ? "lg:min-w-150" : "lg:min-w-110")}
@@ -114,7 +114,7 @@ export function HistoryDrawer({
           <button
             onClick={() => setIsPreview({ open: false, sessionId: null })}
             className={cn(
-              "p-2 hover:bg-gray-100 dark:hover:bg-[#262f45] rounded-full transition-colors cursor-pointer",
+              "p-2 hover:bg-gray-100 dark:hover:bg-neutral-500 rounded-full transition-colors cursor-pointer",
               isPreview.open ? "block" : "hidden",
             )}
           >
@@ -128,7 +128,7 @@ export function HistoryDrawer({
               <button
                 onClick={handleRefreshSession}
                 disabled={spinning}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-[#262f45] rounded-full transition-colors cursor-pointer"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-neutral-500 rounded-full transition-colors cursor-pointer"
               >
                 <RefreshCw
                   className={cn("size-4.5 text-black dark:text-white", spinning ? "spin-once" : "")}
@@ -138,7 +138,7 @@ export function HistoryDrawer({
             <DrawerClose asChild>
               <button
                 onClick={handleCloseHistory}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-[#262f45] rounded-full transition-colors cursor-pointer"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-neutral-500 rounded-full transition-colors cursor-pointer"
               >
                 <X className="size-5 text-black dark:text-white" />
               </button>
@@ -186,7 +186,9 @@ export function HistoryDrawer({
               {t("common.cancel")}
             </AlertDialogCancel>
 
-            <AlertDialogAction onClick={confirmDelete}>{t("common.delete")}</AlertDialogAction>
+            <AlertDialogAction className="bg-red-500 text-white" onClick={confirmDelete}>
+              {t("common.delete")}
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

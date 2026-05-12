@@ -1,7 +1,6 @@
 import { NoouAgentData } from "@/services/agents/types"
 import { shouldRenderMessage } from "./message-utils"
 import { AgentMessageItem } from "./AgentMessageItem"
-import { AgentSelectInfo } from "../AgentSelectInfo"
 import { Message } from "@/pages/agent/types/agent-types"
 
 interface AgentMessageListProps {
@@ -18,8 +17,6 @@ export function AgentMessageList({
   isPreview,
 }: AgentMessageListProps) {
   if (!noouAgents && !isPreview) return
-
-  if (messages.length === 0 && !isPreview) return <AgentSelectInfo agents={noouAgents} />
 
   return (
     <div className="flex flex-col p-4 gap-4">

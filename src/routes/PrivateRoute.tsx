@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 import { AppPreferencesBootstrap } from "@/components/AppPreferencesBootstrap"
 import { useSidebar } from "@/hooks/useSidebar"
-import { Sidebar } from "@/components/global/Sidebar"
+import { Sidebar } from "@/components/sidebar/Sidebar"
 import { Header } from "@/components/global/Header"
 import { useGetMe } from "@/hooks/useGetMe"
 import { cn } from "@/lib/utils"
@@ -26,7 +26,7 @@ export function PrivateRoute() {
       <div className="flex flex-1 overflow-hidden relative">
         {/* 1. BACKDROP (Apenas Mobile) */}
         {!isCollapsed && (
-          <div
+          <button
             className="fixed inset-0 bg-black/60 z-40 md:hidden transition-opacity"
             onClick={toggleSidebar}
           />

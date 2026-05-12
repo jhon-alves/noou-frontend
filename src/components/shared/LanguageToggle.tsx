@@ -34,7 +34,7 @@ export function LanguageToggle({ isLogged = false }: LanguageToggleProps) {
         <div
           className={cn(
             "relative flex items-center justify-center size-10 rounded-full transition-colors cursor-pointer",
-            "bg-[#E5E7EB] dark:bg-[#374151]",
+            "bg-neutral-50 dark:bg-neutral-600",
           )}
           aria-label={t("common.switch-language")}
         >

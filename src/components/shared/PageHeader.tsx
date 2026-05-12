@@ -1,5 +1,5 @@
 import { ChevronLeft, RefreshCw } from "lucide-react"
-import { JSX, PropsWithChildren, useState } from "react"
+import { PropsWithChildren, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {
   Breadcrumb,
@@ -20,7 +20,6 @@ interface BreadcrumbData {
 
 interface PageHeaderProps extends PropsWithChildren {
   title?: string
-  titleComponent?: JSX.Element
   subtitle?: string
   breadcrumbs?: BreadcrumbData[]
   hasRefresh?: boolean
@@ -28,7 +27,6 @@ interface PageHeaderProps extends PropsWithChildren {
 
 export function PageHeader({
   title,
-  titleComponent,
   subtitle,
   breadcrumbs = [],
   hasRefresh = true,
@@ -70,15 +68,17 @@ export function PageHeader({
         </Breadcrumb>
       )}
 
-      <div className="flex items-center gap-4">
-        <button
-          className="size-10 rounded-full flex items-center justify-center bg-[#f5f5f5] dark:bg-[#262f45] hover:bg-[#ebebed] dark:hover:bg-[#3d3d48] transition-colors cursor-pointer"
-          onClick={() => navigate(-1)}
-        >
-          <ChevronLeft className="text-[#111827] dark:text-white" />
-        </button>
-        {title && <h1 className="text-2xl text-[#111827] dark:text-white">{title}</h1>}
-        {titleComponent && titleComponent}
+      <div className="flex items-center gap-6 justify-between">
+        <div className="flex items-center gap-4">
+          <button
+            className="size-10 shrink-0 rounded-full flex items-center justify-center bg-neutral-100 dark:bg-neutral-500 hover:bg-[#ebebed] dark:hover:bg-[#3d3d48] transition-colors cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            <ChevronLeft className="text-[#111827] dark:text-white" />
+          </button>
+          {title && <h1 className="text-2xl text-[#111827] dark:text-white">{title}</h1>}
+        </div>
+        {children}
       </div>
 
       {subtitle && (

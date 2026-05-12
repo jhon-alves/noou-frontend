@@ -32,7 +32,7 @@ export const markdownComponents: Components = {
     return <hr className="my-6 border-t border-border/60" />
   },
   p({ children }) {
-    return <p className="mb-3 leading-relaxed">{children}</p>
+    return <p className="mb-4 last:mb-0 wrap-break-word min-h-6 leading-relaxed">{children}</p>
   },
   ul({ children }) {
     return <ul className="mb-3 list-disc space-y-1 pl-5">{children}</ul>
@@ -58,8 +58,10 @@ export const markdownComponents: Components = {
   },
   table({ children }) {
     return (
-      <div className="my-3 overflow-x-auto">
-        <table className="w-full border-collapse border border-border text-sm">{children}</table>
+      <div className="w-full my-3 overflow-x-auto">
+        <table className="w-full min-w-100 border-collapse border border-border text-sm">
+          {children}
+        </table>
       </div>
     )
   },

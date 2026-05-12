@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next"
 import { useState, useEffect, useRef } from "react"
 import { NoouAgentData } from "@/services/agents/types"
 import { useAgentStore } from "@/stores/useAgentStore"
 import { Check, ChevronDown } from "lucide-react"
+import { Button } from "../ui/button"
 import { cn } from "@/lib/utils"
 
 interface AgentSelectDropdownProps {
@@ -10,6 +12,7 @@ interface AgentSelectDropdownProps {
 }
 
 export function AgentSelectDropdown({ agents, onClearSession }: AgentSelectDropdownProps) {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const { selectedAgent, setSelectedAgent } = useAgentStore()
@@ -47,18 +50,15 @@ export function AgentSelectDropdown({ agents, onClearSession }: AgentSelectDropd
 
   return (
     <div ref={ref} className="relative inline-block">
-      <button
-        onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-2 text-2xl font-medium text-black dark:text-white hover:opacity-80 transition cursor-pointer"
-      >
-        {agentFiltered?.name || "Selecionar agente"}
-        <ChevronDown className="size-4 opacity-60" />
-      </button>
+      <Button size="xs" onClick={() => setOpen((prev) => !prev)}>
+        {t("agent.other-agents")}
+        <ChevronDown />
+      </Button>
 
       {open && (
         <div
           className={cn(
-            "absolute z-50 mt-2 w-[320px] rounded-2xl p-2 bg-gray-100 dark:bg-background",
+            "absolute z-50 mt-2 w-70 rounded-2xl p-2 bg-background",
             "border border-gray-400/10 dark:border-white/10 overflow-hidden",
           )}
         >
@@ -77,14 +77,12 @@ export function AgentSelectDropdown({ agents, onClearSession }: AgentSelectDropd
                 >
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-black dark:text-white">{agent.name}</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      {agent.short_description}
-                    </p>
+                    <p className="text-xs text-neutral-300 mt-1">{agent.short_description}</p>
                   </div>
 
                   {isSelected && (
-                    <div className="ml-2 size-5 rounded-full bg-[#FD108F] flex items-center justify-center">
-                      <Check className="size-4 text-white" />
+                    <div className="ml-2 size-5 rounded-full bg-brand-primary-200 flex items-center justify-center">
+                      <Check className="size-3.5 text-white" />
                     </div>
                   )}
                 </button>

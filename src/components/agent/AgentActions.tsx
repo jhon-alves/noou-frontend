@@ -1,12 +1,15 @@
 import { useTranslation } from "react-i18next"
 import { useAgentStore } from "@/stores/useAgentStore"
-import { Eye, History } from "lucide-react"
+import { Eye, History, MessagesSquare } from "lucide-react"
+import { AgentSelectDropdown } from "./AgentSelectDropdown"
+import { Message } from "@/pages/agent/types/agent-types"
+import { NoouAgentData } from "@/services/agents/types"
 import { ConfigModal } from "./ConfigModal"
 import { Button } from "../ui/button"
 import { cn } from "@/lib/utils"
-import { Message } from "@/pages/agent/types/agent-types"
 
 interface AgentActionsProps {
+  agents: NoouAgentData[]
   messages: Message[]
   onPreviewSession: () => void
   onStopContainer: () => void
@@ -15,6 +18,7 @@ interface AgentActionsProps {
 }
 
 export function AgentActions({
+  agents,
   messages,
   onPreviewSession,
   onStopContainer,
@@ -54,34 +58,21 @@ export function AgentActions({
   }
 
   return (
-    <div className="absolute right-10 top-7 flex items-center gap-2">
+    <div className="flex items-center gap-2">
       {messages?.length > 0 && (
-        <Button
-          variant="ghost"
-          size="sm"
-          className="p-3 bg-[#f5f5f5] dark:bg-[#262f45] hover:bg-[#ebebed] dark:hover:bg-[#3d3d48] gap-2"
-          onClick={onPreviewSession}
-        >
+        <Button size="xs" onClick={onPreviewSession}>
           <Eye className="size-4" />
           {t("agent.preview-sesssion")}
         </Button>
       )}
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="p-3 bg-[#f5f5f5] dark:bg-[#262f45] hover:bg-[#ebebed] dark:hover:bg-[#3d3d48] gap-2"
-        onClick={onStopContainer}
-        disabled={containerStatus !== "active"}
-      >
+      <Button size="xs" onClick={onStopContainer} disabled={containerStatus !== "active"}>
         Stop Container
       </Button>
 
       <Button
-        variant="ghost"
-        size="sm"
+        size="xs"
         disabled={["creating", "connecting-ws", "active"].includes(containerStatus)}
-        className="p-3 bg-[#f5f5f5] dark:bg-[#262f45] hover:bg-[#ebebed] dark:hover:bg-[#3d3d48] gap-3"
         onClick={onStartContainer}
       >
         {getContainerStatusText()}
@@ -101,23 +92,16 @@ export function AgentActions({
         </span>
       </Button>
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="p-3 bg-[#f5f5f5] dark:bg-[#262f45] hover:bg-[#ebebed] dark:hover:bg-[#3d3d48] gap-2"
-        onClick={clearSession}
-      >
-        <span className="text-sm font-bold text-[#ff00d7]">N.</span>
+      <AgentSelectDropdown agents={agents} onClearSession={clearSession} />
+
+      <Button size="xs" onClick={clearSession}>
         {t("agent.new-chat")}
+        <MessagesSquare />
       </Button>
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="p-3 bg-[#f5f5f5] dark:bg-[#262f45] hover:bg-[#ebebed] dark:hover:bg-[#3d3d48]"
-        onClick={() => setHistoryOpen(true)}
-      >
-        <History className="w-5 h-5" />
+      <Button size="xs" onClick={() => setHistoryOpen(true)}>
+        {t("common.history")}
+        <History />
       </Button>
 
       <ConfigModal />

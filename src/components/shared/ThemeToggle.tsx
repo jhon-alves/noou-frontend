@@ -34,14 +34,14 @@ export function ThemeToggle({ isLogged }: ThemeToggleProps) {
       onClick={toggleTheme}
       className={cn(
         "relative flex items-center justify-center size-10 rounded-full transition-colors cursor-pointer",
-        !isDarkMode ? "bg-[#E5E7EB]" : "bg-[#374151]",
+        !isDarkMode ? "bg-neutral-50" : "bg-neutral-600",
       )}
       aria-label="Toggle Theme"
     >
       {!isDarkMode ? (
-        <Moon size={19} className="text-black" />
+        <Moon size={19} className="text-neutral-500" />
       ) : (
-        <Sun size={19} className="text-white" />
+        <Sun size={19} className="text-neutral-300" />
       )}
     </button>
   )

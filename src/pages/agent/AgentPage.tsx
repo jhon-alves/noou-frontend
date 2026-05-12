@@ -20,22 +20,18 @@ import { ArrowDown } from "lucide-react"
 import { useSessions } from "./hooks/useSessions"
 import { getContainerHealthWsUrl } from "./utils/containerHealth"
 import { startContainerHealthSocket } from "./hooks/startContainerHealthSocket"
-import { AgentSelectDropdown } from "@/components/agent/AgentSelectDropdown"
 import { containerPubSub } from "./utils/containerPubSub"
 import { containerEvents } from "./utils/containerEvents"
 import { StartContainerModal } from "@/components/agent/StartContainerModal"
 import { useBusinessStore } from "@/stores/useBusinessStore"
 import { AgentActions } from "@/components/agent/AgentActions"
 import { AgentSkeleton } from "@/components/agent/AgentSkeleton"
+import { cn } from "@/lib/utils"
 
 export default function AssistantPage() {
   const qc = useQueryClient()
   const { t } = useTranslation()
   const [messages, setMessages] = useState<Message[]>([])
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const abortControllerRef = useRef<AbortController | null>(null)
-  const startContainerAbortControllerRef = useRef<AbortController | null>(null)
   const { selectedBusiness } = useBusinessStore()
   const {
     promptTemplate,
@@ -44,7 +40,6 @@ export default function AssistantPage() {
     containerStatus,
     sessionId,
     pendingSessionId,
-    historyOpen,
     isStreaming,
     selectedAgent,
     showScrollDown,
@@ -54,7 +49,6 @@ export default function AssistantPage() {
     setPromptTemplate,
     setSelectedAgent,
     setNoouAgents,
-    setHistoryOpen,
     setIsStreaming,
     setContainerId,
     setContainerToken,
@@ -68,6 +62,11 @@ export default function AssistantPage() {
     resetContainer,
     resetSession,
   } = useAgentStore()
+
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const abortAgentRunRef = useRef<AbortController | null>(null)
+  const abortContainerRef = useRef<AbortController | null>(null)
 
   const businessId = selectedBusiness?.id
   const hasBusiness = !!selectedBusiness
@@ -142,17 +141,17 @@ export default function AssistantPage() {
       })
     },
     onSettled: () => {
-      startContainerAbortControllerRef.current = null
+      abortContainerRef.current = null
     },
   })
 
   function handleStartContainer() {
     if (["creating", "connecting-ws", "active"].includes(containerStatus)) return
 
-    startContainerAbortControllerRef.current?.abort()
+    abortContainerRef.current?.abort()
 
     const controller = new AbortController()
-    startContainerAbortControllerRef.current = controller
+    abortContainerRef.current = controller
 
     setContainerStatus("creating")
 
@@ -185,6 +184,8 @@ export default function AssistantPage() {
 
   const isLoadingConversation =
     Boolean(sessionId) && loadingSession && renderedSessionId !== sessionId
+
+  const isChatActive = messages.length > 0 || isLoadingConversation
 
   useEffect(() => {
     if (!currentSession || isStreaming) return
@@ -248,47 +249,36 @@ export default function AssistantPage() {
     }
   }, [containerToken])
 
+  // Auto-scroll imune a race conditions do streaming
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" })
   }, [messages])
 
-  function recomputeScrollButton() {
-    const el = scrollContainerRef.current
-    if (!el) return
+  useEffect(() => {
+    const bottomElement = messagesEndRef.current
+    const scrollContainer = scrollContainerRef.current
 
-    const threshold = 80
-    const hasOverflow = el.scrollHeight > el.clientHeight + 1
+    if (!bottomElement || !scrollContainer) return
 
-    if (!hasOverflow) {
-      setShowScrollDown(false)
-      return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Se o elemento final está visível na tela, esconde o botão (false).
+        // Se ele sumiu (usuário rolou pra cima), mostra o botão (true).
+        setShowScrollDown(!entry.isIntersecting)
+      },
+      {
+        root: scrollContainer,
+        rootMargin: "10px",
+        threshold: 0,
+      },
+    )
+
+    observer.observe(bottomElement)
+
+    return () => {
+      observer.disconnect()
     }
-
-    const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - threshold
-
-    setShowScrollDown(!isAtBottom)
-  }
-
-  useEffect(() => {
-    const el = scrollContainerRef.current
-    if (!el) return
-
-    const onScroll = () => recomputeScrollButton()
-
-    el.addEventListener("scroll", onScroll)
-    onScroll()
-
-    return () => el.removeEventListener("scroll", onScroll)
-  }, [])
-
-  useEffect(() => {
-    // Aguarda o DOM atualizar com os novos messages (histórico/troca de session)
-    const raf = requestAnimationFrame(() => {
-      recomputeScrollButton()
-    })
-
-    return () => cancelAnimationFrame(raf)
-  }, [messages])
+  }, [isChatActive, sessionId])
 
   function scrollToBottom() {
     messagesEndRef.current?.scrollIntoView({
@@ -341,7 +331,7 @@ export default function AssistantPage() {
       },
     ])
 
-    abortControllerRef.current = new AbortController()
+    abortAgentRunRef.current = new AbortController()
     setIsStreaming(true)
 
     try {
@@ -355,7 +345,7 @@ export default function AssistantPage() {
           session_id: sessionId || undefined,
           files: files?.length ? files : undefined,
         },
-        abortControllerRef.current.signal,
+        abortAgentRunRef.current.signal,
       )
 
       if (!response.ok) {
@@ -460,7 +450,7 @@ export default function AssistantPage() {
             type: "error",
           })
 
-          abortControllerRef.current?.abort()
+          abortAgentRunRef.current?.abort()
         }
       })
     } catch (error) {
@@ -481,13 +471,13 @@ export default function AssistantPage() {
       }
     } finally {
       setIsStreaming(false)
-      abortControllerRef.current = null
+      abortAgentRunRef.current = null
     }
   }
 
   const stopStreaming = () => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort()
+    if (abortAgentRunRef.current) {
+      abortAgentRunRef.current.abort()
       setIsStreaming(false)
     }
   }
@@ -540,79 +530,124 @@ export default function AssistantPage() {
         <>
           <div className="px-6 md:px-8">
             <PageHeader
-              titleComponent={
-                <AgentSelectDropdown agents={noouAgents} onClearSession={clearSession} />
-              }
+              title={selectedAgent?.name}
               breadcrumbs={[
                 { label: t("nav.home"), href: "/dashboard" },
                 { label: t("nav.agent") },
               ]}
-            />
+            >
+              <AgentActions
+                agents={noouAgents}
+                messages={messages}
+                onPreviewSession={handlePreviewSession}
+                onStopContainer={handleStopContainer}
+                onStartContainer={handleStartContainer}
+                clearSession={clearSession}
+              />
+            </PageHeader>
           </div>
 
-          <AgentActions
-            messages={messages}
-            onPreviewSession={handlePreviewSession}
-            onStopContainer={handleStopContainer}
-            onStartContainer={handleStartContainer}
-            clearSession={clearSession}
-          />
-
           <div className="flex flex-1 flex-col overflow-hidden px-6">
-            <div className="relative flex-1 overflow-hidden">
-              <div ref={scrollContainerRef} className="h-full overflow-y-auto scrollbar">
-                {isLoadingConversation && <LoadingMessage />}
-
-                {!isLoadingConversation && (
-                  <AgentMessageList
-                    messages={messages}
-                    isStreaming={isStreaming}
-                    noouAgents={noouAgents}
-                  />
-                )}
-
-                <div ref={messagesEndRef} />
-              </div>
-
-              <AnimatePresence>
-                {showScrollDown && (
-                  <motion.button
-                    initial={{ opacity: 0, y: 10 }}
+            <div
+              className={cn(
+                "flex flex-col flex-1 overflow-hidden",
+                !isChatActive && "justify-center",
+              )}
+            >
+              <AnimatePresence mode="popLayout">
+                {!isChatActive ? (
+                  <div className="flex flex-col items-center justify-center w-full">
+                    <p className="text-5xl font-light text-neutral-800 dark:text-neutral-100 text-center">
+                      {t("agent.welcome-message")}
+                    </p>
+                  </div>
+                ) : (
+                  <motion.div
+                    key="chat"
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                    onClick={scrollToBottom}
-                    className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 rounded-full bg-gray-300 dark:bg-neutral-500 p-3 shadow-lg cursor-pointer"
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="relative flex-1 overflow-hidden flex flex-col w-full"
                   >
-                    <ArrowDown className="text-black dark:text-white size-4" />
-                  </motion.button>
+                    <div
+                      ref={scrollContainerRef}
+                      className="h-full overflow-y-auto scrollbar [overflow-anchor:none]"
+                    >
+                      {isLoadingConversation && <LoadingMessage />}
+
+                      {!isLoadingConversation && (
+                        <AgentMessageList
+                          messages={messages}
+                          isStreaming={isStreaming}
+                          noouAgents={noouAgents}
+                        />
+                      )}
+
+                      <div ref={messagesEndRef} className="[overflow-anchor:auto] h-px shrink-0" />
+                    </div>
+
+                    <AnimatePresence>
+                      {showScrollDown && (
+                        <motion.button
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          onClick={scrollToBottom}
+                          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 rounded-full bg-gray-300 dark:bg-neutral-500 p-3 shadow-lg cursor-pointer"
+                        >
+                          <ArrowDown className="text-black dark:text-white size-4" />
+                        </motion.button>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
                 )}
               </AnimatePresence>
-            </div>
 
-            <div className="relative shrink-0">
-              <InputBar
-                disabled={loadingContainer || containerStatus !== "active"}
-                onSend={sendMessage}
-                isStreaming={isStreaming}
-                onStop={stopStreaming}
-              />
-              <p className="mt-3 text-center text-xs dark:text-[#808080] text-gray-500">
-                {t("agent.check-content")}
-              </p>
+              <motion.div
+                layout
+                initial={false}
+                transition={{
+                  type: "spring",
+                  bounce: 0,
+                  duration: 0.6,
+                }}
+                className={cn(
+                  "w-full relative shrink-0 mx-auto",
+                  !isChatActive ? "max-w-5xl mt-10" : "max-w-full mt-4",
+                )}
+              >
+                <div className="w-full">
+                  <InputBar
+                    disabled={loadingContainer || containerStatus !== "active"}
+                    onSend={sendMessage}
+                    isStreaming={isStreaming}
+                    onStop={stopStreaming}
+                  />
+                </div>
+
+                <AnimatePresence>
+                  {isChatActive && (
+                    <motion.p
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="pt-3 text-center text-xs dark:text-[#808080] text-gray-500 overflow-hidden"
+                    >
+                      {t("agent.check-content")}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             </div>
           </div>
 
           <StartContainerModal
             onStartContainer={handleStartContainer}
-            abortStartContainerRef={startContainerAbortControllerRef}
+            abortStartContainerRef={abortContainerRef}
           />
-          <HistoryDrawer
-            open={historyOpen}
-            onOpenChange={setHistoryOpen}
-            sessions={sessions}
-            loadingSessions={loadingSessions}
-          />
+          <HistoryDrawer sessions={sessions} loadingSessions={loadingSessions} />
         </>
       )}
     </div>

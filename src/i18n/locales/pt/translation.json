@@ -135,7 +135,9 @@
     "title-use-prompt-modal": "Ative o container para usar este prompt",
     "title-use-session-modal": "Ative o container para usar esta conversa",
     "description-use-prompt-modal": "Para enviar prompts nesta tela, é necessário que exista um container ativo para processar a execução do agente.",
-    "description-use-session-modal": "Para usar a conversa, é necessário que exista um container ativo para processar a execução do agente."
+    "description-use-session-modal": "Para usar a conversa, é necessário que exista um container ativo para processar a execução do agente.",
+    "other-agents": "Outros agentes",
+    "welcome-message": "Hey! Como posso ajudar você hoje?"
   },
   "settings": {
     "title": "Conta",
