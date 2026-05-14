@@ -21,7 +21,7 @@ export function ConfigModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="xs">
+        <Button variant="filled" size="xs">
           <Settings />
         </Button>
       </DialogTrigger>

@@ -1,11 +1,11 @@
 import day from "dayjs"
 import duration from "dayjs/plugin/duration"
 import { cn } from "@/lib/utils"
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
 import { PreviewStateProps } from "./HistoryDrawer"
 import { useQuery } from "@tanstack/react-query"
 import { sessionsServices } from "@/services/sessions/sessions-services"
-import { Skeleton } from "../ui/skeleton"
+import { Skeleton } from "../../ui/skeleton"
 import { useTranslation } from "react-i18next"
 
 day.extend(duration)

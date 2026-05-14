@@ -11,7 +11,7 @@ interface AgentMessageItemProps {
   isStreaming: boolean
 }
 
-export function AgentMessageItemComponent({ message, isStreaming }: AgentMessageItemProps) {
+function AgentMessageItemComponent({ message, isStreaming }: AgentMessageItemProps) {
   const isUser = message.role === "user"
   const isAssistant = message.role === "assistant"
 

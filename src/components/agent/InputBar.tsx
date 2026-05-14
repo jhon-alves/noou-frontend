@@ -59,7 +59,10 @@ export function InputBar({ disabled, isStreaming, onSend, onStop }: InputBarProp
     >
       {({ open }) => (
         <div
-          className="flex flex-col gap-3 p-2 rounded-3xl border transition-colors bg-white dark:bg-[#2d2d38] border-[#e3e6ea] dark:border-[#2d2d38]"
+          className={cn(
+            "flex flex-col gap-3 p-2 rounded-3xl bg-neutral-100 dark:bg-neutral-700",
+            "border border-neutral-200 dark:border-neutral-500",
+          )}
           style={{
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
@@ -67,7 +70,7 @@ export function InputBar({ disabled, isStreaming, onSend, onStop }: InputBarProp
         >
           {/* File Preview */}
           {files.length > 0 && (
-            <div className="flex flex-wrap gap-2 px-2">
+            <div className="flex flex-wrap gap-2">
               {files.map((file, index) => {
                 const isImage = file.type.startsWith("image/")
                 const hasNonImageFile = files.some((file) => !file.type.startsWith("image/"))
@@ -77,7 +80,7 @@ export function InputBar({ disabled, isStreaming, onSend, onStop }: InputBarProp
                   <div
                     key={index}
                     className={cn(
-                      "relative rounded-lg overflow-hidden border bg-muted",
+                      "relative rounded-xl overflow-hidden border",
                       hasNonImageFile ? "w-14 h-14" : "w-20 h-20",
                     )}
                   >
@@ -100,9 +103,9 @@ export function InputBar({ disabled, isStreaming, onSend, onStop }: InputBarProp
                 ) : (
                   <div
                     key={index}
-                    className="relative flex items-center gap-3 px-3 py-2 rounded-xl bg-muted max-w-60"
+                    className="relative flex items-center gap-3 px-3 py-2 rounded-xl bg-white dark:bg-neutral-500 max-w-60"
                   >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-violet-500/40 shrink-0">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-brand-secondary-200 shrink-0">
                       <FileText className="w-5 h-5 text-white" />
                     </div>
 
@@ -143,8 +146,8 @@ export function InputBar({ disabled, isStreaming, onSend, onStop }: InputBarProp
             disabled={disabled}
             rows={1}
             className={cn(
-              "min-h-14 w-full  bg-transparent resize-none overflow-hidden outline-none text-sm p-2 text-gray-900 dark:text-[#E5E5E5]",
-              "dark:placeholder:text-[#808080]  placeholder:text-gray-400 scrollbar",
+              "min-h-14 w-full bg-transparent resize-none text-sm p-2 text-neutral-500 dark:text-neutral-400",
+              "dark:placeholder:text-[#808080] placeholder:text-gray-400 overflow-hidden outline-none scrollbar",
             )}
           />
 

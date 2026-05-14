@@ -28,7 +28,7 @@ export function ChatFileDropzone({ onFilesSelected, disabled, children }: ChatFi
       {...getRootProps()}
       className={cn(
         "relative rounded-3xl transition-colors",
-        isDragActive && "ring-2 ring-violet-500 bg-violet-500/5",
+        isDragActive && "ring-2 ring-brand-primary-200",
       )}
     >
       <input {...getInputProps()} />
@@ -37,7 +37,7 @@ export function ChatFileDropzone({ onFilesSelected, disabled, children }: ChatFi
         <div
           className={cn(
             "absolute inset-0 z-10 flex items-center justify-center rounded-3xl text-sm font-medium",
-            "bg-violet-500/10 backdrop-blur-sm text-violet-700 dark:text-violet-300",
+            "bg-brand-primary-200/10 backdrop-blur-sm text-brand-primary-200",
           )}
         >
           {t("agent.drop-files-to-attach")}

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Message } from "./types/agent-types"
 import { InputBar } from "@/components/agent/InputBar"
 import { AgentMessageList } from "@/components/agent/message/AgentMessageList"
@@ -12,7 +12,7 @@ import { agentsServices } from "@/services/agents/agents-services"
 import { parseSSE } from "./utils/parseSSE"
 import { useNoouAgents } from "./hooks/useNoouAgents"
 import { createContainer, shutdownContainer } from "@/services/container/container-services"
-import { HistoryDrawer } from "@/components/agent/HistoryDrawer"
+import { HistoryDrawer } from "@/components/agent/history/HistoryDrawer"
 import { useSessionRuns } from "./hooks/useSessionRuns"
 import { mapSessionRunsToMessages } from "./utils/mapSessionRunsToMessages"
 import { LoadingMessage } from "@/components/agent/LoadingMessage"
@@ -54,7 +54,6 @@ export default function AssistantPage() {
     setContainerToken,
     setContainerStatus,
     setSessionId,
-    setPendingSessionId,
     setMessagesPreview,
     setShowScrollDown,
     setRenderedSessionId,
@@ -121,31 +120,9 @@ export default function AssistantPage() {
       if (!businessId) return
       return createContainer({ business_id: businessId }, signal)
     },
-    onSuccess: (data) => {
-      setContainerId(data.container_id)
-      setContainerToken(data.token)
-      setContainerStatus("connecting-ws")
-
-      const wsUrl = getContainerHealthWsUrl(data.container_id)
-      startContainerHealthSocket(wsUrl, false)
-    },
-    onError: (error) => {
-      if (error instanceof Error && error.name === "CanceledError") return
-      if (error instanceof Error && error.name === "AbortError") return
-
-      setContainerStatus("error")
-      toast({
-        title: t("common.error"),
-        description: t("agent.create-container-error"),
-        type: "error",
-      })
-    },
-    onSettled: () => {
-      abortContainerRef.current = null
-    },
   })
 
-  function handleStartContainer() {
+  const handleStartContainer = useCallback(async () => {
     if (["creating", "connecting-ws", "active"].includes(containerStatus)) return
 
     abortContainerRef.current?.abort()
@@ -161,16 +138,41 @@ export default function AssistantPage() {
 
     containerPubSub.publish(containerEvents.STARTING)
 
-    startContainer(controller.signal)
-  }
+    try {
+      const data = await startContainer(controller.signal)
 
-  // clear sessionId
-  useEffect(() => {
-    return () => {
-      setSessionId(null)
-      setPendingSessionId("")
+      setContainerId(data.container_id)
+      setContainerToken(data.token)
+      setContainerStatus("connecting-ws")
+
+      const wsUrl = getContainerHealthWsUrl(data.container_id)
+      startContainerHealthSocket(wsUrl, false)
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        (error.name === "CanceledError" || error.name === "AbortError")
+      ) {
+        return
+      }
+
+      setContainerStatus("error")
+      toast({
+        title: t("common.error"),
+        description: t("agent.create-container-error"),
+        type: "error",
+      })
+    } finally {
+      abortContainerRef.current = null
     }
-  }, [])
+  }, [containerStatus, startContainerModal, startContainer])
+
+  useEffect(() => {
+    const isIdle = !["creating", "connecting-ws", "active"].includes(containerStatus)
+
+    if (startContainerModal && isIdle) {
+      handleStartContainer()
+    }
+  }, [startContainerModal, containerStatus, handleStartContainer])
 
   // get noou agents / get sessions / get session by id
   const { data: noouAgents, isPending: loadingNoouAgents } = useNoouAgents()
@@ -249,7 +251,6 @@ export default function AssistantPage() {
     }
   }, [containerToken])
 
-  // Auto-scroll imune a race conditions do streaming
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "auto" })
   }, [messages])
@@ -262,8 +263,6 @@ export default function AssistantPage() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Se o elemento final está visível na tela, esconde o botão (false).
-        // Se ele sumiu (usuário rolou pra cima), mostra o botão (true).
         setShowScrollDown(!entry.isIntersecting)
       },
       {
@@ -287,7 +286,7 @@ export default function AssistantPage() {
     })
   }
 
-  const sendMessage = async (content: string, files?: File[]) => {
+  async function sendMessage(content: string, files?: File[]) {
     if (!containerId) {
       toast({
         title: t("common.error"),
@@ -550,28 +549,39 @@ export default function AssistantPage() {
           <div className="flex flex-1 flex-col overflow-hidden px-6">
             <div
               className={cn(
-                "flex flex-col flex-1 overflow-hidden",
+                "flex flex-col h-full overflow-hidden",
                 !isChatActive && "justify-center",
               )}
             >
               <AnimatePresence mode="popLayout">
                 {!isChatActive ? (
-                  <div className="flex flex-col items-center justify-center w-full">
+                  <motion.div
+                    key="hero"
+                    initial={{ opacity: 0, y: 0 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="flex flex-col items-center justify-center w-full h-18 mb-8"
+                  >
                     <p className="text-5xl font-light text-neutral-800 dark:text-neutral-100 text-center">
                       {t("agent.welcome-message")}
                     </p>
-                  </div>
+                  </motion.div>
                 ) : (
                   <motion.div
                     key="chat"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
                     className="relative flex-1 overflow-hidden flex flex-col w-full"
                   >
                     <div
                       ref={scrollContainerRef}
-                      className="h-full overflow-y-auto scrollbar [overflow-anchor:none]"
+                      className={cn(
+                        "h-full overflow-y-auto [overflow-anchor:none]",
+                        isStreaming ? "scrollbar-hide" : "scrollbar",
+                      )}
                     >
                       {isLoadingConversation && <LoadingMessage />}
 
@@ -594,7 +604,11 @@ export default function AssistantPage() {
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
                           onClick={scrollToBottom}
-                          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 rounded-full bg-gray-300 dark:bg-neutral-500 p-3 shadow-lg cursor-pointer"
+                          className={cn(
+                            "absolute bottom-6 left-1/2 -translate-x-1/2 z-20 bg-gray-300 dark:bg-neutral-500",
+                            "rounded-full p-3 shadow-lg cursor-pointer",
+                            isStreaming ? "hidden" : "block",
+                          )}
                         >
                           <ArrowDown className="text-black dark:text-white size-4" />
                         </motion.button>
@@ -614,10 +628,10 @@ export default function AssistantPage() {
                 }}
                 className={cn(
                   "w-full relative shrink-0 mx-auto",
-                  !isChatActive ? "max-w-5xl mt-10" : "max-w-full mt-4",
+                  !isChatActive ? "max-w-5xl" : "max-w-full mt-4",
                 )}
               >
-                <div className="w-full">
+                <div className="w-full px-5">
                   <InputBar
                     disabled={loadingContainer || containerStatus !== "active"}
                     onSend={sendMessage}
@@ -633,7 +647,7 @@ export default function AssistantPage() {
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="pt-3 text-center text-xs dark:text-[#808080] text-gray-500 overflow-hidden"
+                      className="pt-3 text-center text-xs text-neutral-300 overflow-hidden"
                     >
                       {t("agent.check-content")}
                     </motion.p>
@@ -643,11 +657,12 @@ export default function AssistantPage() {
             </div>
           </div>
 
-          <StartContainerModal
-            onStartContainer={handleStartContainer}
-            abortStartContainerRef={abortContainerRef}
+          <StartContainerModal abortStartContainerRef={abortContainerRef} />
+          <HistoryDrawer
+            noouAgents={noouAgents}
+            sessions={sessions}
+            loadingSessions={loadingSessions}
           />
-          <HistoryDrawer sessions={sessions} loadingSessions={loadingSessions} />
         </>
       )}
     </div>

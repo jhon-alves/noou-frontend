@@ -115,6 +115,7 @@ export const useAgentStore = create<AgentStore>((set) => ({
   resetSession: () => {
     set({
       sessionId: "",
+      pendingSessionId: "",
       showScrollDown: false,
       renderedSessionId: null,
       message: "",

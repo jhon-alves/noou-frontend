@@ -60,17 +60,23 @@ export function AgentActions({
   return (
     <div className="flex items-center gap-2">
       {messages?.length > 0 && (
-        <Button size="xs" onClick={onPreviewSession}>
+        <Button variant="filled" size="xs" onClick={onPreviewSession}>
           <Eye className="size-4" />
           {t("agent.preview-sesssion")}
         </Button>
       )}
 
-      <Button size="xs" onClick={onStopContainer} disabled={containerStatus !== "active"}>
+      <Button
+        variant="filled"
+        size="xs"
+        onClick={onStopContainer}
+        disabled={containerStatus !== "active"}
+      >
         Stop Container
       </Button>
 
       <Button
+        variant="filled"
         size="xs"
         disabled={["creating", "connecting-ws", "active"].includes(containerStatus)}
         onClick={onStartContainer}
@@ -94,12 +100,12 @@ export function AgentActions({
 
       <AgentSelectDropdown agents={agents} onClearSession={clearSession} />
 
-      <Button size="xs" onClick={clearSession}>
+      <Button variant="filled" size="xs" onClick={clearSession}>
         {t("agent.new-chat")}
         <MessagesSquare />
       </Button>
 
-      <Button size="xs" onClick={() => setHistoryOpen(true)}>
+      <Button variant="filled" size="xs" onClick={() => setHistoryOpen(true)}>
         {t("common.history")}
         <History />
       </Button>

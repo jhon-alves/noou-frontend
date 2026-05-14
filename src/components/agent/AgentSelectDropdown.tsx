@@ -50,7 +50,7 @@ export function AgentSelectDropdown({ agents, onClearSession }: AgentSelectDropd
 
   return (
     <div ref={ref} className="relative inline-block">
-      <Button size="xs" onClick={() => setOpen((prev) => !prev)}>
+      <Button variant="filled" size="xs" onClick={() => setOpen((prev) => !prev)}>
         {t("agent.other-agents")}
         <ChevronDown />
       </Button>
@@ -62,7 +62,7 @@ export function AgentSelectDropdown({ agents, onClearSession }: AgentSelectDropd
             "border border-gray-400/10 dark:border-white/10 overflow-hidden",
           )}
         >
-          <div className="max-h-[min(420px,70vh)] overflow-y-auto [&::-webkit-scrollbar]:hidden">
+          <div className="max-h-[min(420px,70vh)] overflow-y-auto [&::-webkit-scrollbar]:hidden space-y-2">
             {sortedAgents.map((agent) => {
               const isSelected = agentFiltered?.identifier === agent.identifier
 
@@ -71,8 +71,9 @@ export function AgentSelectDropdown({ agents, onClearSession }: AgentSelectDropd
                   key={agent.id}
                   onClick={() => handleChangeAgent(agent.name, agent.identifier)}
                   className={cn(
-                    "w-full text-left p-4 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer",
+                    "w-full text-left p-3 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer",
                     "flex justify-between items-center gap-2 hover:bg-black/5 dark:hover:bg-white/5",
+                    isSelected ? "bg-black/5 dark:bg-white/5" : "bg-transparent",
                   )}
                 >
                   <div className="flex-1 min-w-0">

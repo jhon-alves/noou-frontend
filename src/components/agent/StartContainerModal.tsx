@@ -2,41 +2,34 @@
 import { RefObject, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { motion, AnimatePresence } from "framer-motion"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { stopContainerHealthSocket } from "@/pages/agent/hooks/startContainerHealthSocket"
 import { ContainerStatus, useAgentStore } from "@/stores/useAgentStore"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Button } from "../ui/button"
+import { XIcon } from "lucide-react"
 import connectingImg from "@/assets/images/connecting-ws-illustration.svg"
 import creatingImg from "@/assets/images/creating-illustration.svg"
 import activeImg from "@/assets/images/active-illustration.svg"
-import { XIcon } from "lucide-react"
-import { Button } from "../ui/button"
-import { stopContainerHealthSocket } from "@/pages/agent/hooks/startContainerHealthSocket"
 
 interface StartContainerModalProps {
-  onStartContainer: () => void
   abortStartContainerRef: RefObject<AbortController>
 }
 
-export function StartContainerModal({
-  onStartContainer,
-  abortStartContainerRef,
-}: StartContainerModalProps) {
+export function StartContainerModal({ abortStartContainerRef }: StartContainerModalProps) {
   const { t } = useTranslation()
   const { containerStatus, startContainerModal, resetContainer, setStartContainerModal } =
     useAgentStore()
   const [confirmAbortModal, setConfirmAbortModal] = useState(false)
   const [connectingTextIndex, setConnectingTextIndex] = useState(0)
 
-  const shouldShowStatus = ["creating", "connecting-ws", "active"].includes(containerStatus)
-  const isProcessing = ["creating", "connecting-ws"].includes(containerStatus)
+  // Verifica se o status atual já é um dos status de inicialização/ativo
+  const isContainerStarted = ["creating", "connecting-ws", "active"].includes(containerStatus)
 
-  // Inicia o container se o mesmo não estiver sendo criado, conectando ou ativo
-  useEffect(() => {
-    if (!startContainerModal) return
+  // Se não estiver iniciado (independente de qual seja o status padrão no seu store), força "creating"
+  const visualStatus = isContainerStarted ? containerStatus : "creating"
 
-    if (shouldShowStatus) return
-
-    onStartContainer()
-  }, [startContainerModal])
+  const shouldShowStatus = ["creating", "connecting-ws", "active"].includes(visualStatus)
+  const isProcessing = ["creating", "connecting-ws"].includes(visualStatus)
 
   // Quando o status do container for active, aguarda 2s para fechar o modal
   useEffect(() => {
@@ -91,7 +84,7 @@ export function StartContainerModal({
 
         return nextIndex
       })
-    }, 4000)
+    }, 5000)
 
     return () => window.clearInterval(interval)
   }, [containerStatus, connectingSubtitles.length])
@@ -106,7 +99,8 @@ export function StartContainerModal({
   const steps = Array.from({ length: 3 })
 
   function handleRequestClose(value: boolean) {
-    if (isProcessing) return
+    // Bloqueio se estiver processando ou se ainda estiver no estado inicial
+    if (isProcessing || !isContainerStarted) return
     setStartContainerModal(value)
   }
 
@@ -119,11 +113,11 @@ export function StartContainerModal({
   }
 
   function handleConfirmAbort() {
-    abortStartContainerRef.current?.abort()
-    abortStartContainerRef.current = null
+    if (abortStartContainerRef.current) {
+      abortStartContainerRef.current.abort()
+    }
 
     stopContainerHealthSocket()
-
     resetContainer()
     setConfirmAbortModal(false)
   }

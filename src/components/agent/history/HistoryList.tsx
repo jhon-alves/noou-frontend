@@ -2,7 +2,7 @@ import day from "dayjs"
 import { ArrowRight, Eye, History, Trash } from "lucide-react"
 import { SessionsResponse } from "@/services/sessions/types"
 import { PreviewStateProps } from "./HistoryDrawer"
-import { Skeleton } from "../ui/skeleton"
+import { Skeleton } from "../../ui/skeleton"
 import { cn } from "@/lib/utils"
 import { useTranslation } from "react-i18next"
 import { useAgentStore } from "@/stores/useAgentStore"
@@ -67,13 +67,13 @@ export function HistoryList({
                 </p>
                 <div className="flex items-center gap-2">
                   <button
-                    className="rounded-full items-center justify-center p-2 bg-gray-200 dark:bg-[#262f45] hidden group-hover:flex cursor-pointer"
+                    className="rounded-full items-center justify-center p-2 bg-gray-200 dark:bg-neutral-500 hidden group-hover:flex cursor-pointer"
                     onClick={(e) => onSessionPreview(e, session.session_id)}
                   >
                     <Eye className="w-3.5 h-3.5 text-black dark:text-white" />
                   </button>
                   <button
-                    className="rounded-full items-center justify-center p-2 bg-gray-200 dark:bg-[#262f45] hidden group-hover:flex cursor-pointer"
+                    className="rounded-full items-center justify-center p-2 bg-gray-200 dark:bg-neutral-500 hidden group-hover:flex cursor-pointer"
                     onClick={(e) => onSessionDelete(e, session.session_id)}
                   >
                     <Trash className="w-3.5 h-3.5 text-red-400" />

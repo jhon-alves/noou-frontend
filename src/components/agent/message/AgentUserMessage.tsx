@@ -17,7 +17,7 @@ export function AgentUserMessage({ content }: UserMessageContentProps) {
 
     const checkOverflow = () => {
       if (!el) return
-      setShowToggle(el.scrollHeight > el.clientHeight + 1)
+      setShowToggle(el.scrollWidth > el.clientWidth + 1)
     }
 
     if (!isExpanded) {
@@ -42,8 +42,8 @@ export function AgentUserMessage({ content }: UserMessageContentProps) {
       <p
         ref={textRef}
         className={cn(
-          "min-w-0 flex-1 text-sm leading-relaxed text-black dark:text-white print:text-black!",
-          isExpanded ? "whitespace-pre-wrap" : "whitespace-normal line-clamp-5",
+          "min-w-0 flex-1 overflow-hidden text-sm leading-relaxed text-black dark:text-white print:text-black!",
+          isExpanded ? "whitespace-pre-wrap" : "block truncate whitespace-nowrap",
         )}
       >
         {isExpanded ? content : content.replace(/\s*\n+\s*/g, " ")}
@@ -53,7 +53,7 @@ export function AgentUserMessage({ content }: UserMessageContentProps) {
         <div className="shrink-0">
           <button
             type="button"
-            className="flex size-8 cursor-pointer items-center justify-center rounded-full hover:bg-black/20"
+            className="flex size-6 cursor-pointer items-center justify-center rounded-full hover:bg-black/20"
             onClick={(e) => {
               e.preventDefault()
               setIsExpanded((prev) => !prev)

@@ -10,11 +10,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../ui/alert-dialog"
+} from "../../ui/alert-dialog"
 import { sessionsServices } from "@/services/sessions/sessions-services"
-import { DrawerTitle, DrawerClose, DrawerHeader } from "../ui/drawer"
+import { DrawerTitle, DrawerClose, DrawerHeader } from "../../ui/drawer"
 import { SessionsResponse } from "@/services/sessions/types"
-import { DrawerBody, DrawerLayout } from "../shared/Drawer"
+import { DrawerBody, DrawerLayout } from "../../shared/Drawer"
+import { NoouAgentData } from "@/services/agents/types"
 import { useAgentStore } from "@/stores/useAgentStore"
 import { ArrowLeft, RefreshCw, X } from "lucide-react"
 import { HistoryPreview } from "./HistoryPreview"
@@ -23,6 +24,7 @@ import { cn } from "@/lib/utils"
 
 interface HistoryDrawerProps {
   prompt?: string
+  noouAgents: NoouAgentData[]
   sessions: SessionsResponse
   loadingSessions: boolean
 }
@@ -32,12 +34,11 @@ export interface PreviewStateProps {
   sessionId: string
 }
 
-export function HistoryDrawer({ sessions, loadingSessions }: HistoryDrawerProps) {
+export function HistoryDrawer({ noouAgents, sessions, loadingSessions }: HistoryDrawerProps) {
   const qc = useQueryClient()
   const { t } = useTranslation()
   const {
     selectedAgent,
-    noouAgents,
     containerStatus,
     historyOpen,
     setSelectedAgent,
@@ -186,7 +187,7 @@ export function HistoryDrawer({ sessions, loadingSessions }: HistoryDrawerProps)
               {t("common.cancel")}
             </AlertDialogCancel>
 
-            <AlertDialogAction className="bg-red-500 text-white" onClick={confirmDelete}>
+            <AlertDialogAction className="bg-red-500! text-white" onClick={confirmDelete}>
               {t("common.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
