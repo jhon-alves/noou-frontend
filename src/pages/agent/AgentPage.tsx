@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Message } from "./types/agent-types"
 import { InputBar } from "@/components/agent/InputBar"
@@ -6,12 +6,10 @@ import { AgentMessageList } from "@/components/agent/message/AgentMessageList"
 import { PageHeader } from "@/components/shared/PageHeader"
 import { useTranslation } from "react-i18next"
 import { useAgentStore } from "@/stores/useAgentStore"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { toast } from "@/hooks/useToast"
-import { agentsServices } from "@/services/agents/agents-services"
-import { parseSSE } from "./utils/parseSSE"
 import { useNoouAgents } from "./hooks/useNoouAgents"
-import { createContainer, shutdownContainer } from "@/services/container/container-services"
+import { createContainer } from "@/services/container/container-services"
 import { HistoryDrawer } from "@/components/agent/history/HistoryDrawer"
 import { useSessionRuns } from "./hooks/useSessionRuns"
 import { mapSessionRunsToMessages } from "./utils/mapSessionRunsToMessages"
@@ -23,16 +21,18 @@ import { startContainerHealthSocket } from "./hooks/startContainerHealthSocket"
 import { containerPubSub } from "./utils/containerPubSub"
 import { containerEvents } from "./utils/containerEvents"
 import { StartContainerModal } from "@/components/agent/StartContainerModal"
+import { useContainerLifecycle } from "./hooks/useContainerLifecycle"
 import { useBusinessStore } from "@/stores/useBusinessStore"
 import { AgentActions } from "@/components/agent/AgentActions"
-import { AgentSkeleton } from "@/components/agent/AgentSkeleton"
+import { useAgentChat } from "./hooks/useAgentChat"
 import { cn } from "@/lib/utils"
 
 export default function AssistantPage() {
-  const qc = useQueryClient()
+  useContainerLifecycle()
   const { t } = useTranslation()
   const [messages, setMessages] = useState<Message[]>([])
   const { selectedBusiness } = useBusinessStore()
+  const { sendMessage, stopStreaming } = useAgentChat({ setMessages })
   const {
     promptTemplate,
     containerId,
@@ -49,73 +49,25 @@ export default function AssistantPage() {
     setPromptTemplate,
     setSelectedAgent,
     setNoouAgents,
-    setIsStreaming,
     setContainerId,
     setContainerToken,
     setContainerStatus,
-    setSessionId,
     setMessagesPreview,
     setShowScrollDown,
     setRenderedSessionId,
     setStartContainerModal,
-    resetContainer,
     resetSession,
   } = useAgentStore()
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const abortAgentRunRef = useRef<AbortController | null>(null)
   const abortContainerRef = useRef<AbortController | null>(null)
 
   const businessId = selectedBusiness?.id
   const hasBusiness = !!selectedBusiness
 
-  useEffect(() => {
-    if (!containerId || !containerToken) return
-
-    const wsUrl = getContainerHealthWsUrl(containerId)
-
-    startContainerHealthSocket(wsUrl, true)
-  }, [])
-
-  useEffect(() => {
-    const unsubReady = containerPubSub.subscribe(containerEvents.READY, () => {
-      setContainerStatus("active")
-
-      if (pendingSessionId) return setSessionId(pendingSessionId)
-    })
-
-    const unsubConnecting = containerPubSub.subscribe(containerEvents.CONNECTING, () => {
-      setContainerStatus("connecting-ws")
-    })
-
-    const unsubStopped = containerPubSub.subscribe(containerEvents.STOPPED, () => {
-      setContainerStatus("stopped")
-    })
-
-    const unsubError = containerPubSub.subscribe(containerEvents.ERROR, () => {
-      setContainerStatus("error")
-      resetContainer()
-    })
-
-    return () => {
-      unsubReady()
-      unsubConnecting()
-      unsubStopped()
-      unsubError()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (containerStatus === "active" && promptTemplate.length > 0) {
-      sendMessage(promptTemplate.trim())
-      setMessage("")
-      setPromptTemplate("")
-    }
-  }, [containerStatus, promptTemplate])
-
   const { mutateAsync: startContainer, isPending: loadingContainer } = useMutation({
-    mutationKey: ["start-container"],
+    mutationKey: ["create-container"],
     mutationFn: (signal?: AbortSignal) => {
       if (!businessId) return
       return createContainer({ business_id: businessId }, signal)
@@ -228,32 +180,22 @@ export default function AssistantPage() {
   }, [sessionRunsIsError, sessionRunsError])
 
   useEffect(() => {
+    if (containerStatus === "active" && promptTemplate.length > 0) {
+      sendMessage(promptTemplate.trim())
+      setMessage("")
+      setPromptTemplate("")
+    }
+  }, [containerStatus, promptTemplate])
+
+  useEffect(() => {
     return () => {
       clearSession()
     }
   }, [])
 
-  // Save container ID to localStorage whenever it changes
-  useEffect(() => {
-    if (containerId) {
-      localStorage.setItem("containerId", containerId)
-    } else {
-      localStorage.removeItem("containerId")
-    }
-  }, [containerId])
-
-  // Save container token to localStorage whenever it changes
-  useEffect(() => {
-    if (containerToken) {
-      localStorage.setItem("containerToken", containerToken)
-    } else {
-      localStorage.removeItem("containerToken")
-    }
-  }, [containerToken])
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "auto" })
-  }, [messages])
+  // useEffect(() => {
+  //   messagesEndRef.current?.scrollIntoView({ behavior: "auto" })
+  // }, [messages])
 
   useEffect(() => {
     const bottomElement = messagesEndRef.current
@@ -267,7 +209,7 @@ export default function AssistantPage() {
       },
       {
         root: scrollContainer,
-        rootMargin: "10px",
+        rootMargin: "300px",
         threshold: 0,
       },
     )
@@ -286,201 +228,6 @@ export default function AssistantPage() {
     })
   }
 
-  async function sendMessage(content: string, files?: File[]) {
-    if (!containerId) {
-      toast({
-        title: t("common.error"),
-        description: t("agent.start-container-error"),
-        type: "error",
-      })
-      return
-    }
-
-    if (!selectedAgent) {
-      toast({
-        title: t("common.error"),
-        description: t("agent.select-agent-error"),
-        type: "error",
-      })
-      return
-    }
-
-    const assistantMessageId = crypto.randomUUID()
-    const userMessageId = crypto.randomUUID()
-
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: userMessageId,
-        role: "user",
-        content,
-        timestamp: new Date(),
-        files: files?.map((file) => ({
-          id: crypto.randomUUID(),
-          name: file.name,
-          type: file.type,
-          previewUrl: file.type.startsWith("image/") ? URL.createObjectURL(file) : undefined,
-        })),
-      },
-      {
-        id: assistantMessageId,
-        role: "assistant",
-        content: "",
-        timestamp: new Date(),
-      },
-    ])
-
-    abortAgentRunRef.current = new AbortController()
-    setIsStreaming(true)
-
-    try {
-      const response = await agentsServices.createAgentRun(
-        containerId,
-        containerToken,
-        selectedAgent.identifier,
-        {
-          message: content,
-          stream: true,
-          session_id: sessionId || undefined,
-          files: files?.length ? files : undefined,
-        },
-        abortAgentRunRef.current.signal,
-      )
-
-      if (!response.ok) {
-        if (response?.status === 500 || response?.status === 502) {
-          setContainerStatus("error")
-        }
-        throw new Error("Failed to run agent")
-      }
-
-      await parseSSE(response, ({ event, data }) => {
-        if (event === "ToolCallStarted" && data.tool) {
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === assistantMessageId
-                ? {
-                    ...msg,
-                    tools: [
-                      ...(msg.tools || []),
-                      {
-                        id: data.tool.tool_call_id,
-                        name: data.tool.tool_name,
-                        status: "started",
-                        args: data.tool.tool_args,
-                        timestamp: new Date(data.created_at * 1000),
-                      },
-                    ],
-                  }
-                : msg,
-            ),
-          )
-        } else if (event === "ToolCallCompleted" && data.tool) {
-          setMessages((prev) =>
-            prev.map((msg) => {
-              if (msg.id !== assistantMessageId || !msg.tools) return msg
-
-              return {
-                ...msg,
-                tools: msg.tools.map((tool) => {
-                  if (tool.id !== data.tool.tool_call_id) {
-                    return tool
-                  }
-
-                  return {
-                    ...tool,
-                    status: "completed",
-                    result: data.tool.result,
-                    error: data.tool.tool_call_error,
-                    duration: data.tool.metrics?.duration,
-                  }
-                }),
-              }
-            }),
-          )
-        } else if (event === "RunContent" && data.content) {
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === assistantMessageId ? { ...msg, content: msg.content + data.content } : msg,
-            ),
-          )
-        } else if (event === "RunResponse" && data.metrics) {
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === assistantMessageId
-                ? {
-                    ...msg,
-                    metrics: {
-                      input_tokens: data.metrics.input_tokens,
-                      output_tokens: data.metrics.output_tokens,
-                      total_tokens: data.metrics.total_tokens,
-                      reasoning_tokens: data.metrics.reasoning_tokens,
-                      time_to_first_token: data.metrics.time_to_first_token,
-                      duration: data.metrics.duration,
-                    },
-                  }
-                : msg,
-            ),
-          )
-        } else if (event === "RunCompleted") {
-          qc.invalidateQueries({ queryKey: ["sessions"] })
-
-          setSessionId(data.session_id)
-
-          if (data.images && data.images.length > 0) {
-            const mappedFiles = data.images.map((img) => ({
-              id: img.id,
-              name: "image",
-              type: img.mime_type,
-              contentBase64: img.content,
-            }))
-            setMessages((prev) =>
-              prev.map((msg) =>
-                msg.id === assistantMessageId ? { ...msg, files: mappedFiles } : msg,
-              ),
-            )
-          }
-        } else if (event === "RunError") {
-          const errorMsg = data.content || data.message || data.error || t("send-message-error")
-
-          toast({
-            title: t("common.error"),
-            description: errorMsg,
-            type: "error",
-          })
-
-          abortAgentRunRef.current?.abort()
-        }
-      })
-    } catch (error) {
-      if (error instanceof Error && error.name === "AbortError") {
-        toast({
-          title: t("common.success"),
-          description: t("agent.abort-message-error"),
-          type: "success",
-        })
-      } else {
-        toast({
-          title: t("common.error"),
-          description: error instanceof Error ? error.message : t("send-message-error"),
-          type: "error",
-        })
-
-        setMessages((prev) => prev.filter((m) => m.id !== assistantMessageId))
-      }
-    } finally {
-      setIsStreaming(false)
-      abortAgentRunRef.current = null
-    }
-  }
-
-  const stopStreaming = () => {
-    if (abortAgentRunRef.current) {
-      abortAgentRunRef.current.abort()
-      setIsStreaming(false)
-    }
-  }
-
   function clearSession() {
     resetSession()
     setMessages([])
@@ -497,33 +244,9 @@ export default function AssistantPage() {
     return
   }
 
-  const { mutateAsync: stopContainer } = useMutation({
-    mutationFn: () => {
-      if (!containerId || !containerToken) return
-
-      return shutdownContainer(containerId, containerToken)
-    },
-    onSuccess: () => {
-      containerPubSub.publish(containerEvents.STOPPED)
-      resetContainer()
-    },
-    onError: () => {
-      toast({
-        title: t("common.error"),
-        description: "Failed to shutdown container",
-        type: "error",
-      })
-    },
-  })
-
-  function handleStopContainer() {
-    if (!containerId || !containerToken) return
-    stopContainer()
-  }
-
   return (
     <div className="relative h-full flex flex-col pt-8 pb-6">
-      {(!hasBusiness || loadingNoouAgents || loadingSessions) && <AgentSkeleton />}
+      {(!hasBusiness || loadingNoouAgents || loadingSessions) && <LoadingMessage />}
 
       {hasBusiness && !loadingNoouAgents && !loadingSessions && (
         <>
@@ -539,7 +262,6 @@ export default function AssistantPage() {
                 agents={noouAgents}
                 messages={messages}
                 onPreviewSession={handlePreviewSession}
-                onStopContainer={handleStopContainer}
                 onStartContainer={handleStartContainer}
                 clearSession={clearSession}
               />
@@ -549,21 +271,21 @@ export default function AssistantPage() {
           <div className="flex flex-1 flex-col overflow-hidden px-6">
             <div
               className={cn(
-                "flex flex-col h-full overflow-hidden",
-                !isChatActive && "justify-center",
+                "flex flex-col flex-1 overflow-hidden",
+                !isChatActive ? "justify-center" : "justify-baseline",
               )}
             >
               <AnimatePresence mode="popLayout">
                 {!isChatActive ? (
                   <motion.div
                     key="hero"
-                    initial={{ opacity: 0, y: 0 }}
+                    initial={{ opacity: 1, y: 0 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="flex flex-col items-center justify-center w-full h-18 mb-8"
+                    exit={{ opacity: 0, y: -40 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className="w-full text-center mb-8"
                   >
-                    <p className="text-5xl font-light text-neutral-800 dark:text-neutral-100 text-center">
+                    <p className="text-5xl font-light text-neutral-800 dark:text-neutral-100">
                       {t("agent.welcome-message")}
                     </p>
                   </motion.div>
@@ -573,7 +295,7 @@ export default function AssistantPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
-                    transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
                     className="relative flex-1 overflow-hidden flex flex-col w-full"
                   >
                     <div
@@ -627,18 +349,17 @@ export default function AssistantPage() {
                   duration: 0.6,
                 }}
                 className={cn(
-                  "w-full relative shrink-0 mx-auto",
-                  !isChatActive ? "max-w-5xl" : "max-w-full mt-4",
+                  "w-full relative shrink-0 mx-auto px-5",
+                  !isChatActive ? "max-w-5xl" : "max-w-full",
                 )}
               >
-                <div className="w-full px-5">
-                  <InputBar
-                    disabled={loadingContainer || containerStatus !== "active"}
-                    onSend={sendMessage}
-                    isStreaming={isStreaming}
-                    onStop={stopStreaming}
-                  />
-                </div>
+                <div className="absolute bottom-full left-0 w-full h-8 pointer-events-none bg-linear-to-t from-[#FAFAFA] to-transparent dark:from-foreground" />
+                <InputBar
+                  disabled={loadingContainer || containerStatus !== "active"}
+                  onSend={sendMessage}
+                  isStreaming={isStreaming}
+                  onStop={stopStreaming}
+                />
 
                 <AnimatePresence>
                   {isChatActive && (

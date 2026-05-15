@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { RefObject, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import { stopContainerHealthSocket } from "@/pages/agent/hooks/startContainerHealthSocket"
 import { ContainerStatus, useAgentStore } from "@/stores/useAgentStore"
 import { Dialog, DialogContent } from "@/components/ui/dialog"

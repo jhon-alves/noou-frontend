@@ -146,8 +146,8 @@ export function InputBar({ disabled, isStreaming, onSend, onStop }: InputBarProp
             disabled={disabled}
             rows={1}
             className={cn(
-              "min-h-14 w-full bg-transparent resize-none text-sm p-2 text-neutral-500 dark:text-neutral-400",
-              "dark:placeholder:text-[#808080] placeholder:text-gray-400 overflow-hidden outline-none scrollbar",
+              "min-h-14 w-full bg-transparent resize-none text-sm p-2 text-neutral-500 dark:text-neutral-50",
+              "dark:placeholder:text-neutral-300 placeholder:text-neutral-500 overflow-hidden outline-none scrollbar",
             )}
           />
 

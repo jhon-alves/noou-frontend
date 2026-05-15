@@ -1,6 +1,7 @@
+import { create } from "zustand"
 import { Message } from "@/pages/agent/types/agent-types"
 import { NoouAgentData } from "@/services/agents/types"
-import { create } from "zustand"
+import { tokens } from "@/config/tokens"
 
 export type ContainerStatus =
   | "stopped" // vermelho
@@ -61,39 +62,39 @@ type AgentStore = {
 
 export const useAgentStore = create<AgentStore>((set) => ({
   // Core
-  containerId: localStorage.getItem("containerId") || "",
-  containerToken: localStorage.getItem("containerToken") || "",
+  containerId: localStorage.getItem(tokens.containerId) || "",
+  containerToken: localStorage.getItem(tokens.containerToken) || "",
   containerStatus: "stopped",
-  sessionId: localStorage.getItem("sessionId") || "",
+  sessionId: localStorage.getItem(tokens.sessionId) || "",
   pendingSessionId: "",
   renderedSessionId: null,
   message: "",
-  messagesPreview: JSON.parse(localStorage.getItem("messagesPreview") || "[]"),
+  messagesPreview: JSON.parse(localStorage.getItem(tokens.messagesPreview) || "[]"),
   promptTemplate: "",
   setContainerId: (containerId) => {
-    localStorage.setItem("containerId", containerId)
+    localStorage.setItem(tokens.containerId, containerId)
     set({ containerId })
   },
   setContainerToken: (containerToken) => {
-    localStorage.setItem("containerToken", containerToken)
+    localStorage.setItem(tokens.containerToken, containerToken)
     set({ containerToken })
   },
   setContainerStatus: (containerStatus) => set({ containerStatus }),
   setSessionId: (sessionId) => {
     if (sessionId) {
-      localStorage.setItem("sessionId", sessionId)
+      localStorage.setItem(tokens.sessionId, sessionId)
       set({ sessionId })
       return
     }
 
-    localStorage.removeItem("sessionId")
+    localStorage.removeItem(tokens.sessionId)
     set({ sessionId: "" })
   },
   setPendingSessionId: (pendingSessionId) => set({ pendingSessionId }),
   setRenderedSessionId: (renderedSessionId) => set({ renderedSessionId }),
   setMessage: (message) => set({ message }),
   setMessagesPreview: (data) => {
-    localStorage.setItem("messagesPreview", JSON.stringify(data))
+    localStorage.setItem(tokens.messagesPreview, JSON.stringify(data))
     set({ messagesPreview: data })
   },
   setPromptTemplate: (promptTemplate) => set({ promptTemplate }),
@@ -103,14 +104,16 @@ export const useAgentStore = create<AgentStore>((set) => ({
       containerToken: "",
       containerStatus: "stopped",
       sessionId: "",
+      pendingSessionId: "",
       message: "",
+      promptTemplate: "",
       showScrollDown: false,
       renderedSessionId: null,
       startContainerModal: false,
     })
-    localStorage.removeItem("containerId")
-    localStorage.removeItem("containerToken")
-    localStorage.removeItem("sessionId")
+    localStorage.removeItem(tokens.containerId)
+    localStorage.removeItem(tokens.containerToken)
+    localStorage.removeItem(tokens.sessionId)
   },
   resetSession: () => {
     set({
@@ -119,8 +122,9 @@ export const useAgentStore = create<AgentStore>((set) => ({
       showScrollDown: false,
       renderedSessionId: null,
       message: "",
+      promptTemplate: "",
     })
-    localStorage.removeItem("sessionId")
+    localStorage.removeItem(tokens.sessionId)
   },
 
   // UI

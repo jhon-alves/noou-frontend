@@ -187,7 +187,7 @@ export function HistoryDrawer({ noouAgents, sessions, loadingSessions }: History
               {t("common.cancel")}
             </AlertDialogCancel>
 
-            <AlertDialogAction className="bg-red-500! text-white" onClick={confirmDelete}>
+            <AlertDialogAction className="bg-red-500! text-white!" onClick={confirmDelete}>
               {t("common.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -1,5 +1,9 @@
 import { useTranslation } from "react-i18next"
-import { useAgentStore } from "@/stores/useAgentStore"
+import { useMutation } from "@tanstack/react-query"
+import { ContainerStatus, useAgentStore } from "@/stores/useAgentStore"
+import { shutdownContainer } from "@/services/container/container-services"
+import { containerPubSub } from "@/pages/agent/utils/containerPubSub"
+import { containerEvents } from "@/pages/agent/utils/containerEvents"
 import { Eye, History, MessagesSquare } from "lucide-react"
 import { AgentSelectDropdown } from "./AgentSelectDropdown"
 import { Message } from "@/pages/agent/types/agent-types"
@@ -12,7 +16,6 @@ interface AgentActionsProps {
   agents: NoouAgentData[]
   messages: Message[]
   onPreviewSession: () => void
-  onStopContainer: () => void
   onStartContainer: () => void
   clearSession: () => void
 }
@@ -21,40 +24,44 @@ export function AgentActions({
   agents,
   messages,
   onPreviewSession,
-  onStopContainer,
   onStartContainer,
   clearSession,
 }: AgentActionsProps) {
   const { t } = useTranslation()
-  const { containerStatus, setHistoryOpen } = useAgentStore()
+  const { containerId, containerToken, containerStatus, setHistoryOpen, resetContainer } =
+    useAgentStore()
 
-  function getContainerStatusColor() {
-    switch (containerStatus) {
-      case "creating":
-        return "bg-red-500"
-      case "connecting-ws":
-        return "bg-yellow-400"
-      case "active":
-        return "bg-green-500"
-      case "stopped":
-        return "bg-red-600"
-      default:
-        return "bg-red-600"
-    }
+  const containerStatusColor: Partial<Record<ContainerStatus, string>> = {
+    creating: "bg-red-500",
+    "connecting-ws": "bg-yellow-400",
+    active: "bg-green-500",
+    stopped: "bg-red-600",
+    error: "bg-red-600",
   }
 
-  function getContainerStatusText() {
-    switch (containerStatus) {
-      case "creating":
-        return t("agent.creating-container")
-      case "connecting-ws":
-        return t("agent.connecting-ws")
-      case "active":
-        return t("agent.container-active")
-      case "stopped":
-      default:
-        return t("agent.start-container")
-    }
+  const containerStatusText: Partial<Record<ContainerStatus, string>> = {
+    creating: t("agent.creating-container"),
+    "connecting-ws": t("agent.connecting-ws"),
+    active: t("agent.container-active"),
+    stopped: t("agent.start-container"),
+    error: t("agent.start-container"),
+  }
+
+  const { mutateAsync: stopContainer } = useMutation({
+    mutationFn: () => {
+      if (!containerId || !containerToken) return
+
+      return shutdownContainer(containerId, containerToken)
+    },
+    onSuccess: () => {
+      containerPubSub.publish(containerEvents.STOPPED)
+      resetContainer()
+    },
+  })
+
+  function handleStopContainer() {
+    if (!containerId || !containerToken) return
+    stopContainer()
   }
 
   return (
@@ -69,7 +76,7 @@ export function AgentActions({
       <Button
         variant="filled"
         size="xs"
-        onClick={onStopContainer}
+        onClick={handleStopContainer}
         disabled={containerStatus !== "active"}
       >
         Stop Container
@@ -81,19 +88,22 @@ export function AgentActions({
         disabled={["creating", "connecting-ws", "active"].includes(containerStatus)}
         onClick={onStartContainer}
       >
-        {getContainerStatusText()}
+        {containerStatusText[containerStatus]}
         <span className="relative flex size-2.5">
           {["creating", "connecting-ws"].includes(containerStatus) && (
             <span
               className={cn(
                 "absolute inline-flex h-full w-full animate-ping rounded-full opacity-75",
-                getContainerStatusColor(),
+                containerStatusColor[containerStatus],
               )}
             />
           )}
 
           <span
-            className={cn("relative inline-flex size-2.5 rounded-full", getContainerStatusColor())}
+            className={cn(
+              "relative inline-flex size-2.5 rounded-full",
+              containerStatusColor[containerStatus],
+            )}
           />
         </span>
       </Button>

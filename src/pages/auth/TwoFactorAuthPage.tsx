@@ -1,6 +1,6 @@
 import z from "zod"
 import { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
